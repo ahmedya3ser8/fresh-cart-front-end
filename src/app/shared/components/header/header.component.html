@@ -1,0 +1,101 @@
+<div class="py-3 hidden lg:block border-b border-gray-100">
+
+  <div class="container">
+
+    <div class="flex justify-between items-center">
+
+      <div class="flex items-center gap-6">
+        <div class="flex items-center gap-2">
+          <ng-icon class="text-emerald-600!" name="heroTruckSolid" />
+          <p class="text-gray-500 text-sm"> Free Shipping on Orders 500 EGP </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <ng-icon class="text-emerald-600!" name="heroGiftSolid" />
+          <p class="text-gray-500 text-sm"> New Arrivals Daily </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-6">
+
+        <div class="flex items-center gap-4">
+          <a href="tel:+201048843170" class="flex items-center gap-2 text-gray-500 text-sm transition hover:text-emerald-600!">
+            <ng-icon name="heroPhoneSolid" />
+            +201048843170
+          </a>
+          <a href="mailto:support@freshcart.com" class="flex items-center gap-2 text-gray-500 text-sm transition hover:text-emerald-600!">
+            <ng-icon name="heroEnvelopeSolid" />
+            support&#64;freshcart.com
+          </a>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <a routerLink="/auth/signin" class="flex items-center gap-2 text-gray-500 text-sm transition hover:text-emerald-600!">
+            <ng-icon name="heroUserSolid" />
+            Sign In
+          </a>
+          <a routerLink="/auth/signup" class="flex items-center gap-2 text-gray-500 text-sm transition hover:text-emerald-600!">
+            <ng-icon name="heroUserPlusSolid" />
+            Sign Up
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<header class="sticky top-0 z-50 bg-white shadow-sm py-4">
+
+  <div class="container">
+
+    <div class="flex justify-between items-center">
+
+      <a routerLink="/home" class="">
+        <img src="/images/freshcart-logo.svg" class="w-full" alt="freshcart-logo" />
+      </a>
+
+      <div class="flex-1 max-w-2xl">
+        <input type="search" class="form-control rounded-full px-4 py-2.5" placeholder="Search for products, brands and more" />
+      </div>
+
+      <ul class="flex items-center gap-5">
+        <li>
+          <a routerLink="/home" class="text-gray-600 font-medium transition hover:text-emerald-600"> Home </a>
+        </li>
+        <li>
+          <a routerLink="/products" class="text-gray-600 font-medium transition hover:text-emerald-600"> Products </a>
+        </li>
+        <li>
+          <a routerLink="/categories" class="text-gray-600 font-medium transition hover:text-emerald-600"> Categories </a>
+        </li>
+        <li>
+          <a routerLink="/brands" class="text-gray-600 font-medium transition hover:text-emerald-600"> Brands </a>
+        </li>
+      </ul>
+
+      <div class="flex items-center gap-4">
+        <a routerLink="/contact-us" class="flex items-center gap-3 transition hover:opacity-80">
+          <div class="size-8 bg-emerald-50 rounded-full flex justify-center items-center">
+            <ng-icon class="text-emerald-600!" name="heroChatBubbleLeftRightSolid" />
+          </div>
+          <div class="flex flex-col gap-1 text-xs">
+            <span class="text-gray-400"> Support </span>
+            <span class="text-gray-700 font-semibold"> 24/7 Help </span>
+          </div>
+        </a>
+        <a routerLink="/wishlist" class="p-2 rounded-full transition hover:text-emerald-600! hover:bg-gray-50">
+          <ng-icon class="size-7!" name="heroHeart" />
+        </a>
+        <a routerLink="/cart" class="p-2 rounded-full transition hover:text-emerald-600! hover:bg-gray-50">
+          <ng-icon class="size-7!" name="heroShoppingCart" />
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+</header>

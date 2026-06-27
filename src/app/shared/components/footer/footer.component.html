@@ -1,0 +1,54 @@
+<footer class="bg-gray-800 text-gray-400 py-10">
+  <div class="container">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12">
+
+      <div class="col space-y-6 lg:col-span-4">
+
+        <div class="bg-[#FFFFFF] py-2 px-4 w-fit rounded-lg">
+          <img src="/images/freshcart-logo.svg" class="w-full" alt="freshcart-logo" />
+        </div>
+
+        <p class="text-sm">
+          FreshCart is your one-stop destination for quality products.
+          From fashion to electronics, we bring you the best brands at competitive prices with a seamless shopping experience.
+        </p>
+
+        <ul class="space-y-3">
+          <li>
+            <a href="tel:+201048843170" class="flex items-center gap-2">
+              <ng-icon class="text-emerald-600!" name="heroPhoneSolid" />
+              +201048843170
+            </a>
+          </li>
+          <li>
+            <a href="mailto:support@freshcart.com" class="flex items-center gap-2">
+              <ng-icon class="text-emerald-600!" name="heroEnvelopeSolid" />
+              support&#64;freshcart.com
+            </a>
+          </li>
+          <li class="flex items-center gap-2">
+            <ng-icon class="text-emerald-600!" name="heroMapPinSolid" />
+            <p> 123 Commerce Street, New York, NY 10001 </p>
+          </li>
+        </ul>
+
+      </div>
+
+      @for (menu of menuList; track menu.id) {
+        <div class="col space-y-6 lg:col-span-2">
+          <h3 class="text-lg font-semibold text-white"> {{ menu.title }} </h3>
+          <ul class="space-y-3">
+            @for (item of menu.items; track $index) {
+              <li>
+                <a [routerLink]="item.link" class="transition cursor-pointer hover:text-emerald-500"> {{ item.text }} </a>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+
+    </div>
+
+  </div>
+</footer>

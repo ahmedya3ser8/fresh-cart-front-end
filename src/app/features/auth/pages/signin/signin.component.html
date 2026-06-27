@@ -1,0 +1,80 @@
+<section class="py-10">
+
+  <div class="container max-w-7xl">
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+
+      <!-- left -->
+      <div class="space-y-6">
+
+        <img src="/images/signin.webp" class="w-full h-70 rounded-2xl shadow-lg" alt="signin" />
+
+        <div class="space-y-3 md:space-y-4 text-center">
+
+          <h2 class="text-[22px] md:text-3xl font-bold text-gray-800"> FreshCart - Your One-Stop Shop </h2>
+
+          <p class="text-base md:text-lg text-gray-600"> Join thousands of happy customers today </p>
+
+          <div class="flex flex-col md:flex-row items-center justify-center gap-5">
+            <div class="flex items-center gap-2">
+              <ng-icon class="text-emerald-600!" name="heroTruckSolid" />
+              <span> Free Delivery </span>
+            </div>
+            <div class="flex items-center gap-2">
+              <ng-icon class="text-emerald-600!" name="heroShieldCheckSolid" />
+              <span> Secure Payment </span>
+            </div>
+            <div class="flex items-center gap-2">
+              <ng-icon class="text-emerald-600!" name="heroClockSolid" />
+              <span> 24/7 Support </span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- right -->
+      <div class="bg-white shadow-xl rounded-2xl p-4 md:p-6 space-y-4 md:space-y-6">
+
+        <div class="space-y-2 text-center">
+          <h2 class="text-2xl md:text-3xl font-semibold"> Welcome Back! </h2>
+          <p class="text-sm md:text-base"> Sign in to continue shopping </p>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="submitForm()" class="flex flex-col gap-5">
+          <div class="space-y-2">
+            <label for="email" class="block font-medium"> Email </label>
+            <input type="email" id="email" formControlName="email" class="form-control" placeholder="Enter your email" />
+            @if (form.get('email')?.hasError('required') && form.get('email')?.touched) {
+              <p class="text-sm text-red-500"> Email address is required </p>
+            }
+            @else if (form.get('email')?.hasError('email')) {
+              <p class="text-sm text-red-500"> Please enter a valid email address </p>
+            }
+          </div>
+          <div class="space-y-2">
+            <label for="password" class="block font-medium"> Password </label>
+            <input type="password" id="password" formControlName="password" class="form-control" placeholder="Enter your password" />
+            @if (form.get('password')?.hasError('required') && form.get('password')?.touched) {
+              <p class="text-sm text-red-500"> Password is required </p>
+            }
+          </div>
+          <a routerLink="/auth/forget-password" class="text-emerald-600 transition ms-auto hover:underline"> Forgot Password? </a>
+          <button type="submit" class="w-full px-2 py-3 bg-emerald-600 rounded-md text-white cursor-pointer transition hover:bg-emerald-700">
+            Sign In
+          </button>
+        </form>
+
+        <p class="text-center">
+          New to FreshCart?
+          <a routerLink="/auth/signup" class="text-emerald-600 font-medium transition hover:underline"> Sign Up </a>
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
