@@ -1,0 +1,50 @@
+<div class="bg-white shadow-sm rounded-lg transition-all relative overflow-hidden hover:shadow-md group">
+  <img [src]="product.imageCover" class="w-full h-60 object-contain" [alt]="product.title" />
+  @if(product.priceAfterDiscount) {
+    <span class="bg-red-500 text-white text-xs rounded-sm py-1 px-2 absolute top-3 left-3">
+      {{ calculateDiscount(product.price, product.priceAfterDiscount) }}%
+    </span>
+  }
+  <div class="absolute top-3 right-3 translate-x-10 transition-all duration-700 group-hover:translate-x-0 flex flex-col gap-2">
+    <button class="bg-white size-8 rounded-full flex justify-center items-center text-gray-600 cursor-pointer shadow-sm transition hover:text-red-500">
+      <ng-icon name="heroHeart" />
+    </button>
+    <button [routerLink]="['/products', product._id]" class="bg-white size-8 rounded-full flex justify-center items-center text-gray-600 cursor-pointer shadow-sm transition hover:text-emerald-600">
+      <ng-icon name="heroEye" />
+    </button>
+  </div>
+  <div class="p-4 space-y-2">
+    <span class="text-gray-500 text-xs"> {{ product.category.name }} </span>
+    <h3 class="font-medium line-clamp-1"> {{ product.title }} </h3>
+    <div class="flex items-center gap-2">
+      <div class="flex items-center gap-1">
+        @for (star of [1,2,3,4,5]; track star) {
+          @if (star <= product.ratingsAverage) {
+            <ng-icon class="text-yellow-400!" name="heroStarSolid" />
+          }
+          @else {
+            <ng-icon class="text-yellow-400!" name="heroStar" />
+          }
+        }
+      </div>
+      <div class="text-xs text-gray-500">
+        {{ product.ratingsAverage }} ({{ product.ratingsQuantity }})
+      </div>
+    </div>
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-lg font-bold text-gray-800">
+          {{ product.price }} EGP
+        </span>
+        @if (product.priceAfterDiscount) {
+          <span class="text-sm text-gray-500 line-through">
+            {{ product.priceAfterDiscount }} EGP
+          </span>
+        }
+      </div>
+      <button class="bg-emerald-600 text-white font-medium text-sm size-10 rounded-xl flex items-center justify-center cursor-pointer shadow-sm shadow-emerald-200 transition hover:bg-emerald-700">
+        <ng-icon class="size-5!" name="heroPlus" />
+      </button>
+    </div>
+  </div>
+</div>

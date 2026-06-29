@@ -1,0 +1,28 @@
+<section class="py-10">
+
+  <div class="container space-y-8">
+
+    <app-section-heading
+      [title]="'Shop By'"
+      [subTitle]="'Category'"
+    >
+      <div routerLink="/categories" class="text-emerald-600 font-medium flex items-center gap-1.5 cursor-pointer transition hover:text-emerald-700">
+        View All Categories
+        <ng-icon name="heroArrowSmallRight" />
+      </div>
+    </app-section-heading>
+
+    <swiper-container #swiperRef init="false">
+      @for (category of categories; track category._id) {
+        <swiper-slide class="py-2">
+          <div [routerLink]="['/categories', category._id]" class="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-center items-center gap-3 cursor-pointer transition hover:shadow-md">
+            <img [src]="category.image" class="w-20 h-20 rounded-full" [alt]="category.name" />
+            <h3 class="font-medium"> {{ category.name }} </h3>
+          </div>
+        </swiper-slide>
+      }
+    </swiper-container>
+
+  </div>
+
+</section>

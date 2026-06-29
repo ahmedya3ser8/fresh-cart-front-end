@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+
 import { guestGuard } from './core';
 
 export const routes: Routes = [
@@ -22,6 +23,10 @@ export const routes: Routes = [
       {
         path: 'products',
         loadChildren: () => import('./features/products/product.routes').then((r) => r.PRODUCT_ROUTES)
+      },
+      {
+        path: 'categories',
+        loadChildren: () => import('./features/categories/category.routes').then((r) => r.CATEGORY_ROUTES)
       },
     ]
   },

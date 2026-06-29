@@ -1,3 +1,3 @@
 export * from './pages';
-export * from './product.routes';
 export * from './services';
+export * from './category.routes';
