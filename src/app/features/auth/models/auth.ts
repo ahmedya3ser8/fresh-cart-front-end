@@ -1,11 +1,13 @@
 export interface AuthResponse {
   message: string;
   token: string;
-  user: {
-    email: string;
-    name: string;
-    role: string;
-  }
+  user: User;
+}
+
+export interface User {
+  email: string;
+  name: string;
+  role: string;
 }
 
 export interface SigninForm {

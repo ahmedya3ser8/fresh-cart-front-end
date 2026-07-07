@@ -1,0 +1,4 @@
+::ng-deep .swiper-slide-thumb-active img {
+  border: 4px solid #337ab7 !important;
+  transition: border-color .3s !important;
+}

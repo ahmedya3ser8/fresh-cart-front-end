@@ -1,0 +1,23 @@
+<div class="flex items-center gap-4 md:gap-6 bg-white p-6 shadow-md rounded-2xl border border-gray-100 transition hover:shadow-lg">
+  <div class="size-12 sm:size-14 md:size-16 rounded-full uppercase bg-emerald-600 text-white flex items-center justify-center font-semibold shadow-md text-lg sm:text-xl md:text-2xl">
+    {{ review.user.name[0] }}
+  </div>
+  <div class="space-y-0.5">
+    <h4 class="font-semibold text-gray-900 text-base sm:text-lg md:text-xl">
+      {{ review.user.name }}
+    </h4>
+    <div class="flex items-center gap-2">
+      <div class="flex items-center gap-1 text-yellow-400!">
+        @for (item of getStars(review.rating); track $index) {
+          <ng-icon name="heroStarSolid" />
+        }
+      </div>
+      <span class="text-xs sm:text-sm md:text-base text-gray-400">
+        {{ review.createdAt | date: 'MM/dd/yyyy' }}
+      </span>
+    </div>
+    <p class="text-gray-700 leading-relaxed text-sm sm:text-base md:text-lg">
+      {{ review.review }}
+    </p>
+  </div>
+</div>

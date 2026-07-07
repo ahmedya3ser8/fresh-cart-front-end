@@ -1,0 +1,107 @@
+<div class="bg-white shadow-sm rounded-xl p-6 space-y-4">
+
+  <div class="flex items-center gap-2">
+    <span class="bg-green-50 text-green-700 text-xs px-3 py-1.5 rounded-full transition hover:bg-green-100">
+      {{ product.category.name }}
+    </span>
+    <span class="bg-gray-100 text-gray-700 text-xs px-3 py-1.5 rounded-full">
+      {{ product.brand.name }}
+    </span>
+  </div>
+
+  <h1 class="text-2xl lg:text-3xl font-bold text-gray-900">
+    {{ product.title }}
+  </h1>
+
+  <div class="flex items-center gap-3">
+
+    <div class="flex items-center gap-1">
+      @for (star of [1,2,3,4,5]; track star) {
+        @if (star <= product.ratingsAverage) {
+          <ng-icon class="text-yellow-400!" name="heroStarSolid" />
+        }
+        @else {
+          <ng-icon class="text-yellow-400!" name="heroStar" />
+        }
+      }
+    </div>
+
+    <div class="text-gray-500 text-xs">
+      {{ product.ratingsAverage }}
+      ( {{product.reviews.length }} reviews)
+    </div>
+
+  </div>
+
+  <h4 class="text-3xl font-bold text-gray-900">
+    {{ product.price }} EGP
+  </h4>
+
+  <div class="bg-green-50 text-green-700 px-3 py-1.5 rounded-full text-sm flex items-center gap-1.5 w-fit">
+    <span class="size-2 bg-green-500 rounded-full"></span>
+    In Stock
+  </div>
+
+  <p class="text-gray-600 leading-relaxed">
+    {{ product.description }}
+  </p>
+
+  <div class="space-y-2">
+    <span class="block text-sm font-medium text-gray-700"> Quantity </span>
+    <div class="flex items-center gap-4">
+      <div class="border-2 border-gray-200 rounded-lg flex items-center">
+        <button class="px-4 py-3 text-gray-600 transition hover:bg-gray-100 cursor-pointer flex items-center justify-center">
+          <ng-icon name="heroMinus" />
+        </button>
+        <input type="number" class="text-center outline-none font-medium" min="1" [value]="1" [max]="product.quantity" />
+        <button class="px-4 py-3 text-gray-600 transition hover:bg-gray-100 cursor-pointer flex items-center justify-center">
+          <ng-icon name="heroPlus" />
+        </button>
+      </div>
+      <span class="text-sm text-gray-500">
+        {{ product.quantity }} available
+      </span>
+    </div>
+  </div>
+
+  <div class="bg-gray-50 p-4 flex items-center justify-between">
+    <span class="text-gray-600"> Total Price: </span>
+    <span class="text-2xl font-bold text-green-600"> {{ product.price }} EGP  </span>
+  </div>
+
+  <div class="flex items-center gap-4">
+    <button class="w-full lg:w-1/2 px-6 py-4 rounded-xl font-medium bg-green-600 text-white transition hover:bg-green-700 flex items-center justify-center gap-2 cursor-pointer">
+      <ng-icon name="heroShoppingCartSolid" />
+      Add to Cart
+    </button>
+    <button class="w-full lg:w-1/2 px-6 py-4 rounded-xl font-medium bg-gray-900 text-white transition hover:bg-gray-800 flex items-center justify-center gap-2 cursor-pointer">
+      <ng-icon name="heroBoltSolid" />
+      Buy Now
+    </button>
+  </div>
+
+  <div class="flex items-center gap-4">
+    <button class="flex-1 px-6 py-4 rounded-xl border-2 border-gray-200 font-medium bg-transparent text-gray-700 transition hover:border-green-500 hover:text-green-600 flex items-center justify-center gap-2 cursor-pointer">
+      <ng-icon name="heroHeart" />
+      Add to Wishlist
+    </button>
+    <button class="border-2 border-gray-200 text-gray-700 px-4 py-3 rounded-xl transition hover:border-green-300 hover:text-green-600 cursor-pointe">
+      <ng-icon name="heroShare" />
+    </button>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    @for (feature of features; track feature.id) {
+      <div class="flex items-center gap-3">
+        <div class="size-10 bg-green-100 text-green-600 rounded-full flex justify-center items-center">
+          <ng-icon [name]="feature.icon" />
+        </div>
+        <div class="space-y-0.5">
+          <h4 class="font-medium text-gray-900 text-sm"> {{ feature.title }} </h4>
+          <p class="text-gray-500 text-xs"> {{ feature.description }} </p>
+        </div>
+      </div>
+    }
+  </div>
+
+</div>

@@ -1,0 +1,18 @@
+<div class="text-sm flex items-center gap-2">
+  @for (item of breadcrumbs; track $index) {
+    @if (item.link && !$last) {
+      <a [class]="color" [routerLink]="item.link" class="text-white/70 transition hover:text-white">
+        {{ item.label }}
+      </a>
+    } @else {
+      <span [class]="color" class="text-white font-medium">
+        {{ item.label }}
+      </span>
+    }
+    @if (!$last) {
+      <span [class]="color" class="text-white/40">
+        {{ symbol ? symbol : '/' }}
+      </span>
+    }
+  }
+</div>

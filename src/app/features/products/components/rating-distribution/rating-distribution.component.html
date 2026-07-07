@@ -1,0 +1,24 @@
+<div class="space-y-6">
+  <h3 class="text-xl font-semibold text-gray-900">
+    Rating Distribution
+  </h3>
+  <div class="space-y-5">
+    @for (item of [5,4,3,2,1]; track $index) {
+      <div class="flex items-center gap-6">
+        <div class="flex items-center gap-1 text-sm font-medium text-gray-700 w-14">
+          {{ item }}
+          <ng-icon class="text-yellow-400! size-3!" name="heroStarSolid" />
+        </div>
+        <div class="flex-1 h-3 bg-gray-100 rounded-full">
+          <span
+            [style.width.%]="ratingPercentages[item]"
+            class="block h-full bg-linear-to-r from-yellow-400 to-yellow-500 rounded-full transition-all duration-500"
+          ></span>
+        </div>
+        <div class="w-10 text-sm text-gray-500 text-right">
+          {{ ratingPercentages[item] | number:'1.0-0' }}%
+        </div>
+      </div>
+    }
+  </div>
+</div>

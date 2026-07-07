@@ -1,0 +1,38 @@
+<div class="p-6 bg-white rounded-lg shadow-sm border border-gray-100 space-y-8">
+
+  <div class="grid lg:grid-cols-3 gap-8">
+
+    <app-rating-summary
+      [ratingsAverage]="product.ratingsAverage"
+      [reviewsCount]="reviews.length"
+      [productId]="product._id"
+      (onSubmit)="onSubmit.emit()"
+    />
+
+    <app-rating-distribution
+      class="lg:col-span-2"
+      [ratingPercentages]="ratingPercentages"
+    />
+
+  </div>
+
+  <div class="space-y-8">
+
+    <div class="flex items-center justify-between">
+      <h3 class="text-gray-900 font-semibold text-xl">
+        Customer Reviews
+      </h3>
+      <span class="text-sm text-gray-500">
+        Showing {{ reviews.length || 0 }} reviews
+      </span>
+    </div>
+
+    <div class="space-y-5 max-h-100 overflow-y-auto">
+      @for (review of reviews; track review._id) {
+        <app-review-card [review]="review" />
+      }
+    </div>
+
+  </div>
+
+</div>

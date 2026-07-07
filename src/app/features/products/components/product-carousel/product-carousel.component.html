@@ -1,0 +1,16 @@
+<swiper-container #swiperRef init="false">
+  @for (product of products; track product._id) {
+    <swiper-slide>
+      <app-product-card [product]="product" />
+    </swiper-slide>
+  }
+</swiper-container>
+
+<div class="flex gap-2 absolute top-0 right-6">
+  <button #prevBtn class="size-10 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center transition hover:bg-green-100 hover:text-green-600 cursor-pointer">
+    <ng-icon name="heroChevronLeft" />
+  </button>
+  <button #nextBtn class="size-10 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center transition hover:bg-green-100 hover:text-green-600 cursor-pointer">
+    <ng-icon name="heroChevronRight" />
+  </button>
+</div>

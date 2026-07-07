@@ -9,3 +9,8 @@ export interface ApiResponse<T> {
   },
   data: T;
 }
+
+export interface IPaginatedObj {
+  brandId?: string;
+  categoryId?: string;
+}

@@ -1,1 +1,81 @@
-<p>product-details works!</p>
+<section class="pt-4">
+  <div class="container">
+    <app-breadcrumb
+      [breadcrumbs]="breadcrumbs"
+      [color]="'text-gray-500! hover:text-green-600!'"
+      [symbol]="'>'"
+    />
+  </div>
+</section>
+
+<section class="py-10">
+  <div class="container">
+
+    <div class="grid grid-cols-12 gap-8">
+
+      <app-product-gallery
+        class="col-span-full lg:col-span-3"
+        [product]="product"
+      />
+
+      <app-product-info
+        class="col-span-full lg:col-span-9"
+        [product]="product"
+      />
+
+    </div>
+
+  </div>
+</section>
+
+<section class="py-10">
+  <div class="container">
+
+    <div class="bg-white rounded-lg shadow-sm space-y-2">
+
+      <app-product-tabs
+        [activeTab]="activeTab"
+        [reviewsCount]="reviews.length || 0"
+        (selectTab)="setTab($event)"
+      />
+
+      <div class="p-6 text-sm">
+        @switch (activeTab) {
+          @case ('details') {
+            <app-product-details-tab
+              [product]="product"
+            />
+          }
+          @case ('reviews') {
+            <app-product-reviews-tab
+              [product]="product"
+              [reviews]="reviews"
+              (onSubmit)="loadReviewsForProduct()"
+            />
+          }
+          @case ('shipping') {
+            <app-product-shipping-tab />
+          }
+        }
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<section class="py-10">
+  <div class="container relative">
+
+    <app-section-heading
+      [title]="'You May Also'"
+      [subTitle]="'Like'"
+    />
+
+    <app-product-carousel
+      [products]="products"
+    />
+
+  </div>
+</section>

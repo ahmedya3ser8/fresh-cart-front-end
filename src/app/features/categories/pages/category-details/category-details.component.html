@@ -1,1 +1,42 @@
-<p>category-details works!</p>
+<app-page-header
+  [title]="category.name"
+  [description]="'Browse our wide range of product categories'"
+  [icon]="'heroSquares2x2Solid'"
+  [gradiant]="'bg-linear-to-br from-orange-600 via-orange-500 to-orange-400'"
+>
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" />
+</app-page-header>
+
+<section class="py-10">
+
+  <div class="container space-y-6">
+
+    <p class="text-sm text-gray-500">
+      Showing {{ products.length }} products
+    </p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+      @for (product of products; track product._id) {
+        <app-product-card [product]="product" />
+      }
+      @empty {
+        <div class="space-y-4 col-span-full text-center">
+          <div class="size-20 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center mx-auto">
+            <ng-icon class="size-7.5!" name="heroTagSolid" />
+          </div>
+          <h2 class="text-lg font-bold text-gray-900"> No Products Found </h2>
+          <p class="text-gray-500"> No products match your current filters </p>
+          <button
+            routerLink="/products"
+            routerLinkActive="router-link-active"
+            class="bg-emerald-600 rounded-xl py-3 px-6 text-white font-semibold transition cursor-pointer hover:bg-emerald-700"
+          >
+            View All Products
+          </button>
+        </div>
+      }
+    </div>
+
+  </div>
+
+</section>

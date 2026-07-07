@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 
 import { ProductCardComponent, SectionHeadingComponent } from "../../../../shared";
 import { ProductService } from '../../../products';
@@ -10,7 +10,7 @@ import { Product } from '../../../products/models/product';
   templateUrl: './featured-products.component.html',
   styleUrl: './featured-products.component.css',
 })
-export class FeaturedProductsComponent {
+export class FeaturedProductsComponent implements OnInit {
   private readonly productService = inject(ProductService);
 
   products: Product[] = [];

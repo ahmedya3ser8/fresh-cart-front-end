@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { APP_CONSTANTS } from '../../constants';
-import { ApiResponse } from '../models';
+import { ApiResponse, IPaginatedObj } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +15,15 @@ export abstract class BaseHttpService<T> {
 
   abstract getResourceUrl(): string;
 
-  getAll(): Observable<ApiResponse<T[]>> {
-    return this.http.get<ApiResponse<T[]>>(this.baseUrl);
+  getAll(searchObj?: IPaginatedObj): Observable<ApiResponse<T[]>> {
+    let params = new HttpParams();
+      if (searchObj?.brandId) {
+        params = params.set('brand', searchObj.brandId);
+      }
+      if (searchObj?.categoryId) {
+        params = params.set('category[in]', searchObj.categoryId);
+      }
+    return this.http.get<ApiResponse<T[]>>(this.baseUrl, { params });
   }
 
   getById(id: string): Observable<ApiResponse<T>> {

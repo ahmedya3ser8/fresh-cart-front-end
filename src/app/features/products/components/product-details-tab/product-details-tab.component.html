@@ -1,0 +1,49 @@
+<div class="space-y-6">
+
+  <div class="space-y-3">
+    <h3 class="text-lg font-semibold text-gray-900">
+      About this Product
+    </h3>
+    <p class="text-gray-600 leading-relaxed text-base font-medium">
+      {{ product.description }}
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+    <div class="bg-gray-50 rounded-xl p-6 border-2 border-green-500 space-y-5">
+      <h3 class="font-semibold text-lg text-gray-800 flex items-center gap-2">
+        <ng-icon class="size-5!" name="heroCubeSolid" />
+        Product Information
+      </h3>
+      <ul class="space-y-4 text-sm">
+        @for (item of productInfo; track $index) {
+          <li class="flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <ng-icon class="size-5! text-green-600!" [name]="item.icon" />
+              <span class="text-gray-500"> {{ item.label }} </span>
+            </div>
+            <span class="font-medium text-gray-800"> {{ item.value() }} </span>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <div class="bg-gray-50 rounded-xl p-6 border-2 border-green-500 space-y-5">
+      <h3 class="font-semibold text-lg text-gray-800 flex items-center gap-2">
+        <ng-icon class="size-5!" name="heroSparklesSolid" />
+        Key Features
+      </h3>
+      <ul class="space-y-4 text-sm">
+        @for (feature of keyFeatures; track $index) {
+          <li class="flex items-center gap-3 text-gray-700">
+            <ng-icon class="size-5! text-green-600!" [name]="feature.icon" />
+            <span> {{ feature.text }} </span>
+          </li>
+        }
+      </ul>
+    </div>
+
+  </div>
+
+</div>

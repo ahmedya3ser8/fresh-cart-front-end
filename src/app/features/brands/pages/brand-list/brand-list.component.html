@@ -1,0 +1,29 @@
+<app-page-header
+  [title]="'Top Brands'"
+  [description]="'Shop from your favorite brands'"
+  [icon]="'heroTagSolid'"
+  [gradiant]="'bg-linear-to-br from-violet-600 via-violet-500 to-purple-400'"
+>
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" />
+</app-page-header>
+
+<section class="py-10">
+
+  <div class="container">
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
+      @for (brand of brands; track brand._id) {
+        <div [routerLink]="['/brands', brand._id]" class="bg-white rounded-2xl p-4 shadow-sm space-y-4 transition-all duration-300 hover:shadow-md group cursor-pointer">
+          <div class="aspect-square rounded-xl bg-gray-50 p-4 flex items-center justify-center overflow-hidden">
+            <img [src]="brand.image" class="w-full transition-all duration-300 group-hover:scale-110" [alt]="brand.name" />
+          </div>
+          <h3 class="text-gray-900 font-semibold text-sm text-center transition truncate group-hover:text-violet-600">
+            {{ brand.name }}
+          </h3>
+        </div>
+      }
+    </div>
+
+  </div>
+
+</section>

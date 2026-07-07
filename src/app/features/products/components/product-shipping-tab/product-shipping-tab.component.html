@@ -1,0 +1,41 @@
+<div class="p-6 bg-white rounded-lg shadow-sm border border-gray-100 space-y-8">
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    @for (shipping of shippingList; track $index) {
+      <div class="bg-emerald-50 rounded-lg p-6 space-y-6">
+        <div class="flex items-center gap-4">
+          <div class="size-12 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-md">
+            <ng-icon class="size-5!" [name]="shipping.icon" />
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900">
+            {{ shipping.title }}
+          </h3>
+        </div>
+        <ul class="space-y-4 text-sm md:text-base text-gray-700">
+          @for (item of shipping.items; track $index) {
+            <li class="flex items-center gap-3">
+              <ng-icon class="text-green-600! size-5!" name="heroCheck" />
+              {{ item }}
+            </li>
+          }
+        </ul>
+      </div>
+    }
+  </div>
+
+  <div class="bg-gray-50 rounded-lg p-6 border border-gray-100 flex items-center gap-4">
+    <div class="size-12 rounded-full bg-gray-200 text-gray-700 flex items-center justify-center">
+      <ng-icon class="size-5!" name="heroShieldCheck" />
+    </div>
+    <div class="space-y-0.5">
+      <h4 class="text-lg font-semibold text-gray-900">
+        Buyer Protection Guarantee
+      </h4>
+      <p class="text-xs sm:text-base text-gray-600 leading-relaxed">
+        Get a full refund if your order doesn't arrive or isn't as described.
+        We ensure your shopping experience is safe, secure, and worry-free.
+      </p>
+    </div>
+  </div>
+
+</div>

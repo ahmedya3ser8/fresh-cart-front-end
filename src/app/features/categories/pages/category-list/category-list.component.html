@@ -1,1 +1,29 @@
-<p>category-list works!</p>
+<app-page-header
+  [title]="'All Categories'"
+  [description]="'Browse our wide range of product categories'"
+  [icon]="'heroSquares2x2Solid'"
+  [gradiant]="'bg-linear-to-br from-orange-600 via-orange-500 to-orange-400'"
+>
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" />
+</app-page-header>
+
+<section class="py-10">
+
+  <div class="container">
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+      @for (category of categories; track category._id) {
+        <div [routerLink]="['/categories', category._id]" class="bg-white rounded-2xl p-4 shadow-sm space-y-4 transition-all duration-300 hover:shadow-md group cursor-pointer">
+          <div class="aspect-square rounded-xl bg-gray-50 p-4 flex items-center justify-center overflow-hidden">
+            <img [src]="category.image" class="w-full transition-all duration-300 group-hover:scale-110" [alt]="category.name" />
+          </div>
+          <h3 class="text-gray-900 font-semibold text-sm text-center transition truncate group-hover:text-violet-600">
+            {{ category.name }}
+          </h3>
+        </div>
+      }
+    </div>
+
+  </div>
+
+</section>

@@ -3,5 +3,4 @@ export const APP_CONSTANTS = {
   TOKEN_KEY: 'fce_token',
   USER_KEY: 'fce_user',
   PAGE_SIZE: 10,
-  TOAST_DURATION: 3000,
 } as const;

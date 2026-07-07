@@ -1,4 +1,5 @@
 import { Category } from "../../categories/models/category";
+import { Review } from "./review";
 
 export interface Product {
   _id: string;
@@ -25,5 +26,6 @@ export interface Product {
     name: string;
     slug: string;
     category: string;
-  }
+  }[];
+  reviews: Review[];
 }

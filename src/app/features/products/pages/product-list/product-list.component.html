@@ -1,1 +1,26 @@
-<p>product-list works!</p>
+<app-page-header
+  [title]="'All Products'"
+  [description]="'Explore our complete product collection'"
+  [icon]="'heroCubeSolid'"
+  [gradiant]="'bg-linear-to-br from-blue-600 via-blue-500 to-blue-400'"
+>
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" />
+</app-page-header>
+
+<section class="py-10">
+
+  <div class="container space-y-6">
+
+    <p class="text-sm text-gray-500">
+      Showing {{ products.length }} products
+    </p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+      @for (product of products; track product._id) {
+        <app-product-card [product]="product" />
+      }
+    </div>
+
+  </div>
+
+</section>

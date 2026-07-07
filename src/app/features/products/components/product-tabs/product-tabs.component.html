@@ -1,0 +1,19 @@
+<div class="flex items-center gap-2 border-b border-gray-200">
+  @for (tab of tabs; track tab.id) {
+    <button
+      [class]="activeTab === tab.id
+        ? 'bg-green-50 text-green-600 border-b border-green-600'
+        : 'border-none text-gray-600 hover:bg-gray-50 hover:text-green-600'"
+      (click)="selectTab.emit(tab.id)"
+      class="px-6 py-4 font-medium  transition cursor-pointer flex items-center gap-1"
+    >
+      <ng-icon [name]="tab.icon" />
+      @if(tab.id === 'reviews') {
+        {{ tab.label }} ({{ reviewsCount }})
+      }
+      @else {
+        {{ tab.label }}
+      }
+    </button>
+  }
+</div>
