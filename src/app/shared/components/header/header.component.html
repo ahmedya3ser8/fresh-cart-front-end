@@ -29,7 +29,7 @@
         </div>
 
         <div class="flex items-center gap-4">
-          @if (isLoggedIn()) {
+          @if (isLoggedIn) {
             <div class="flex items-center gap-1.5 text-gray-600 transition hover:text-emerald-600!">
               <ng-icon name="heroUserSolid" />
               {{ currentUser?.name }}
@@ -38,7 +38,8 @@
               <ng-icon name="heroArrowRightOnRectangle" />
               Sign Out
             </button>
-          } @else {
+          }
+          @else {
             <a routerLink="/auth/signin" class="flex items-center gap-1.5 text-gray-600 transition hover:text-emerald-600!">
               <ng-icon name="heroUserSolid" />
               Sign In
@@ -88,7 +89,7 @@
       </ul>
 
       <div class="flex items-center gap-4">
-        <a routerLink="/contact-us" class="flex items-center gap-3 transition hover:opacity-80">
+        <a routerLink="/contact" class="flex items-center gap-3 transition hover:opacity-80">
           <div class="size-8 bg-emerald-50 rounded-full flex justify-center items-center">
             <ng-icon class="text-emerald-600!" name="heroChatBubbleLeftRightSolid" />
           </div>
@@ -100,10 +101,13 @@
         <a routerLink="/wishlist" class="p-2 rounded-full transition hover:text-emerald-600! hover:bg-gray-50">
           <ng-icon class="size-7!" name="heroHeart" />
         </a>
-        <a routerLink="/cart" class="p-2 rounded-full transition hover:text-emerald-600! hover:bg-gray-50">
+        <a routerLink="/cart" class="relative p-2 rounded-full transition hover:text-emerald-600! hover:bg-gray-50">
           <ng-icon class="size-7!" name="heroShoppingCart" />
+          <span class="absolute top-0.5 right-0.5 size-4.5 rounded-full bg-green-600 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-white">
+            {{ cart?.numOfCartItems || 0 }}
+          </span>
         </a>
-        @if (isLoggedIn()) {
+        @if (isLoggedIn) {
           <button (click)="toggleDropDown()" class="relative" #dropDownContainer>
             <div class="p-2 rounded-full cursor-pointer transition hover:text-emerald-600! hover:bg-gray-50">
               <ng-icon class="size-7!" name="heroUserCircle" />

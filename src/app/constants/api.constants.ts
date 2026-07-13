@@ -12,4 +12,7 @@ export const API_ENDPOINTS = {
   BRANDS: {
     BASE: '/v1/brands'
   },
+  CART: {
+    BASE: '/v2/cart'
+  },
 } as const;

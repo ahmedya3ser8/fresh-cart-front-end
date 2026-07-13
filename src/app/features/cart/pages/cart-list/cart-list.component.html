@@ -1,0 +1,36 @@
+<section class="py-10">
+  <div class="container">
+
+    <app-breadcrumb
+      [breadcrumbs]="breadcrumbs"
+      [color]="'text-gray-500! hover:text-green-600!'"
+    />
+
+    <app-cart-header
+      [numOfCartItems]="cart.numOfCartItems || 0"
+    />
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+      <div class="lg:col-span-2 space-y-5">
+        @for (product of cart.data?.products; track product.product._id) {
+          <app-cart-card [product]="product" />
+        }
+        <div class="flex justify-between items-center mt-6">
+          <a routerLink="/home" class="text-green-600 font-medium text-sm transition hover:text-green-700 flex items-center gap-2">
+            <ng-icon name="heroArrowLongLeft" />
+            Continue Shopping
+          </a>
+          <button (click)="deleteCart()" class="text-sm text-gray-400 transition font-medium hover:text-red-500 flex items-center gap-2 cursor-pointer">
+            <ng-icon name="heroTrashSolid" />
+            Clear all items
+          </button>
+        </div>
+      </div>
+
+      <app-cart-summary [cart]="cart" />
+
+    </div>
+
+  </div>
+</section>

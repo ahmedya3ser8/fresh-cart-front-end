@@ -1,0 +1,50 @@
+<div class="lg:col-span-1 h-fit bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden sticky top-24">
+
+  <div class="bg-linear-to-r from-green-600 to-green-700 text-white px-6 py-4 space-y-2">
+    <div class="flex items-center gap-2">
+      <ng-icon class="size-4.5!" name="heroShoppingBagSolid" />
+      <h2 class="text-lg font-bold"> Order Summary </h2>
+    </div>
+    <p class="text-green-100 text-sm">
+      @if(cart.data) {
+        {{ cart.data.products.length || 0 }}
+      }
+      items in your carts
+    </p>
+  </div>
+
+  <div class="p-6 space-y-5">
+
+    <div class="bg-linear-to-r from-green-50 to-emerald-50 rounded-xl px-6 py-4 flex items-center gap-3">
+      <div class="size-10 rounded-full bg-green-100 text-green-600! flex items-center justify-center">
+        <ng-icon name="heroTruck" />
+      </div>
+      <div class="space-y-0.5">
+        <h3 class="font-semibold text-green-700"> Free Shipping! </h3>
+        <p class="text-sm text-green-600"> You qualify for free delivery </p>
+      </div>
+    </div>
+
+    <ul class="space-y-5">
+      <li class="flex justify-between items-center text-gray-600">
+        <span> Subtotal </span>
+        <span class="font-medium text-gray-900"> {{ cart.data?.totalCartPrice || 0 }} EGP </span>
+      </li>
+      <li class="flex justify-between items-center text-gray-600">
+        <span> Shipping </span>
+        <span class="font-medium text-green-600 uppercase"> FREE </span>
+      </li>
+      <li class="flex justify-between items-center text-gray-600">
+        <span> Total </span>
+        <span class="font-medium text-gray-900"> {{ cart.data?.totalCartPrice || 0 }} EGP </span>
+      </li>
+    </ul>
+
+    <button class="w-full bg-linear-to-r from-green-600 to-green-700 text-white py-4 px-6 rounded-xl font-semibold transition-all hover:from-green-700 hover:to-green-800 flex items-center justify-center gap-3 shadow-md cursor-pointer">
+      <ng-icon name="heroLockClosedSolid" />
+      Secure Checkout
+    </button>
+
+  </div>
+
+</div>

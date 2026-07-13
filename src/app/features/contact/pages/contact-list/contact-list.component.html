@@ -1,0 +1,82 @@
+<app-page-header
+  [title]="'Contact Us'"
+  [description]="'We\'d love to hear from you. Get in touch with our team.'"
+  [icon]="'heroChatBubbleLeftRightSolid'"
+  [gradiant]="'bg-linear-to-br from-green-600 via-green-500 to-green-400'"
+>
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" />
+</app-page-header>
+
+<section class="py-10">
+  <div class="container">
+
+    <div class="grid grid-cols-3 gap-8">
+
+      <div class="space-y-6 col-span-full lg:col-span-1">
+        @for (contact of contacts; track contact.id) {
+          <div class="bg-white shadow-sm border border-gray-100 p-4 rounded-xl flex gap-4">
+            <div class="size-12 rounded-full bg-green-50 flex items-center justify-center">
+              <ng-icon class="size-4.5! text-green-500!" [name]="contact.icon" />
+            </div>
+            <div class="space-y-1.5">
+              <h3 class="font-semibold text-gray-900"> {{ contact.title }} </h3>
+              <p [innerHTML]="contact.description" class="text-gray-500 text-sm"></p>
+              <a [href]="contact.link" class="text-green-500 font-medium transition hover:underline">
+                {{ contact.text }}
+              </a>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="bg-white shadow-sm border border-gray-100 p-4 rounded-xl col-span-full lg:col-span-2 space-y-6">
+
+        <div class="flex items-center gap-3">
+          <div class="size-12 rounded-full bg-green-50 flex items-center justify-center">
+            <ng-icon class="size-4.5! text-green-500!" name="heroChatBubbleLeftRightSolid" />
+          </div>
+          <div class="space-y-0.5">
+            <h2 class="text-xl font-bold text-gray-900"> Send us a Message </h2>
+            <p class="text-gray-500 text-sm"> Fill out the form and we'll get back to you </p>
+          </div>
+        </div>
+
+        <form class="space-y-5">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div class="space-y-2">
+              <label for="fullName" class="block font-medium"> Full Name </label>
+              <input type="text" id="fullName" class="form-control" placeholder="John Doe" />
+            </div>
+            <div class="space-y-2">
+              <label for="email" class="block font-medium"> Email Address </label>
+              <input type="email" id="email" class="form-control" placeholder="john.doe@example.com" />
+            </div>
+          </div>
+          <div class="space-y-2">
+            <label for="subject" class="block font-medium"> Subject </label>
+            <select id="subject" class="form-control">
+              <option> Select a Subject </option>
+              <option value="general"> General Inquiry </option>
+              <option value="order"> Order Support </option>
+              <option value="shipping"> Shipping Question </option>
+              <option value="returns"> Returns & Refunds </option>
+              <option value="product"> Product Information </option>
+              <option value="feedback"> Feedback & Suggestions </option>
+              <option value="other"> Other </option>
+            </select>
+          </div>
+          <div class="space-y-2">
+            <label for="message" class="block font-medium"> Message </label>
+            <textarea class="form-control h-35 resize-none" id="message" placeholder="How can we help you?"></textarea>
+          </div>
+          <button type="submit" class="px-6 py-3.5 bg-green-500 rounded-xl text-white font-semibold cursor-pointer transition hover:bg-green-700">
+            Send Message
+          </button>
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>

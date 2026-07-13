@@ -8,14 +8,14 @@ import { ApiResponse, IPaginatedObj } from '../models';
 @Injectable({
   providedIn: 'root'
 })
-export abstract class BaseHttpService<T> {
+export abstract class BaseHttpService<TEntity, TCreate = never, TUpdate = never> {
   protected baseUrl = APP_CONSTANTS.API_BASE_URL + this.getResourceUrl();
 
   protected readonly http = inject(HttpClient);
 
   abstract getResourceUrl(): string;
 
-  getAll(searchObj?: IPaginatedObj): Observable<ApiResponse<T[]>> {
+  getAll(searchObj?: IPaginatedObj): Observable<ApiResponse<TEntity[]>> {
     let params = new HttpParams();
       if (searchObj?.brandId) {
         params = params.set('brand', searchObj.brandId);
@@ -23,26 +23,39 @@ export abstract class BaseHttpService<T> {
       if (searchObj?.categoryId) {
         params = params.set('category[in]', searchObj.categoryId);
       }
-    return this.http.get<ApiResponse<T[]>>(this.baseUrl, { params });
+    return this.http.get<ApiResponse<TEntity[]>>(this.baseUrl, { params });
   }
 
-  getById(id: string): Observable<ApiResponse<T>> {
-    return this.http.get<ApiResponse<T>>(`${this.baseUrl}/${id}`);
+  getById(id: string): Observable<ApiResponse<TEntity>> {
+    return this.http.get<ApiResponse<TEntity>>(`${this.baseUrl}/${id}`);
   }
 
-  create(body: T): Observable<ApiResponse<T>> {
-    return this.http.post<ApiResponse<T>>(this.baseUrl, body);
+  create(body: TCreate): Observable<ApiResponse<TEntity>> {
+    return this.http.post<ApiResponse<TEntity>>(this.baseUrl, body);
+  }
+
+  update(id: string, body: TUpdate): Observable<ApiResponse<TEntity>> {
+    return this.http.put<ApiResponse<TEntity>>(`${this.baseUrl}/${id}`, body);
+  }
+
+  remove(id: string): Observable<ApiResponse<TEntity>> {
+    return this.http.delete<ApiResponse<TEntity>>(`${this.baseUrl}/${id}`);
+  }
+
+  get(): Observable<TEntity> {
+    return this.http.get<TEntity>(this.baseUrl);
   }
 
   post<T>(endpoint: string, body: any): Observable<T> {
     return this.http.post<T>(`${this.baseUrl}${endpoint}`, body);
   }
 
-  update(id: string, body: T): Observable<ApiResponse<T>> {
-    return this.http.put<ApiResponse<T>>(`${this.baseUrl}/${id}`, body);
+  put<T>(id: string, body: any): Observable<T> {
+    return this.http.put<T>(`${this.baseUrl}/${id}`, body);
   }
 
-  delete(id: string): Observable<ApiResponse<T>> {
-    return this.http.delete<ApiResponse<T>>(`${this.baseUrl}/${id}`);
+  delete<T>(id?: string): Observable<T> {
+    const url = id ? `${this.baseUrl}/${id}` : this.baseUrl;
+    return this.http.delete<T>(url);
   }
 }

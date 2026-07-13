@@ -1,0 +1,50 @@
+<div class="bg-white rounded-2xl shadow-sm transition hover:shadow-md border border-gray-100 p-4 flex items-center gap-4">
+  <a [routerLink]="['/products', product.product._id]" class="group space-y-2">
+    <div class="size-28 sm:h-32 rounded-xl bg-linear-to-r from-gray-50 via-white to-gray-100 p-2 border border-gray-100 overflow-hidden">
+      <img [src]="product.product.imageCover" class="w-full h-fit object-contain transition-all duration-300 group-hover:scale-110" [alt]="product.product.title" />
+    </div>
+    @if (product.product.quantity) {
+      <div class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm font-semibold flex items-center justify-center gap-1">
+        <span class="size-2 bg-green-500 rounded-full"></span>
+        In Stock
+      </div>
+    }
+  </a>
+  <div class="space-y-4 flex-1">
+    <h3 class="font-semibold text-gray-900 text-base sm:text-lg leading-relaxed transition hover:text-green-600">
+      {{ product.product.title }}
+    </h3>
+    <h4 class="bg-linear-to-r from-green-50 to-emerald-50 text-green-700 text-xs font-medium rounded-full px-3 py-1 w-fit">
+      {{ product.product.category.name }}
+    </h4>
+    <div class="flex items-center gap-2">
+      <span class="text-lg font-bold text-green-600">
+        {{ product.price }} EGP
+      </span>
+      <span class="text-xs text-gray-400"> per unit </span>
+    </div>
+    <div class="flex justify-between">
+      <div class="border-2 border-gray-200 rounded-lg flex items-center">
+        <button (click)="updateQuantity(product.product._id, product.count - 1)" class="px-4 py-3 text-gray-600 transition hover:bg-gray-100 cursor-pointer flex items-center justify-center">
+          <ng-icon name="heroMinus" />
+        </button>
+        <span class="w-12 text-center font-bold text-gray-900"> {{ product.count }} </span>
+        <button (click)="updateQuantity(product.product._id, product.count + 1)" class="px-4 py-3 text-gray-600 transition hover:bg-gray-100 cursor-pointer flex items-center justify-center">
+          <ng-icon name="heroPlus" />
+        </button>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="flex flex-col gap-0.5">
+          <span class="text-gray-400 text-xs text-right"> Total </span>
+          <div class="text-gray-900 text-xl font-bold mx-1">
+            {{ product.price * product.count }}
+            <span class="text-sm font-medium text-gray-400"> EGP </span>
+          </div>
+        </div>
+        <button (click)="deleteProduct(product.product._id)" class="size-10 rounded-xl border border-red-200 bg-red-50 text-red-500 cursor-pointer transition hover:bg-red-500 hover:text-white flex items-center justify-center">
+          <ng-icon class="size-4.5!" name="heroTrashSolid" />
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

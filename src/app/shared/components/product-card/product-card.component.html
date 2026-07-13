@@ -42,7 +42,7 @@
           </span>
         }
       </div>
-      <button class="bg-emerald-600 text-white font-medium text-sm size-10 rounded-xl flex items-center justify-center cursor-pointer shadow-sm shadow-emerald-200 transition hover:bg-emerald-700">
+      <button (click)="addProductToCart(product._id)" class="bg-emerald-600 text-white font-medium text-sm size-10 rounded-xl flex items-center justify-center cursor-pointer shadow-sm shadow-emerald-200 transition hover:bg-emerald-700">
         <ng-icon class="size-5!" name="heroPlus" />
       </button>
     </div>
