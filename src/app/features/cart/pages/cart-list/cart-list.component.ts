@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from "@angular/router";
 
 import { NgIconComponent, provideIcons } from "@ng-icons/core";
-import { heroArrowLongLeft } from '@ng-icons/heroicons/outline';
+import { heroArrowLongLeft, heroArrowLongRight, heroShoppingCart } from '@ng-icons/heroicons/outline';
 import { heroTrashSolid } from '@ng-icons/heroicons/solid';
 
 import { BreadcrumbComponent } from '../../../../shared/components/breadcrumb/breadcrumb.component';
@@ -21,7 +21,9 @@ import { CartService } from '../../services';
   providers: [
     provideIcons({
       heroTrashSolid,
-      heroArrowLongLeft
+      heroArrowLongLeft,
+      heroShoppingCart,
+      heroArrowLongRight
     })
   ]
 })
@@ -34,6 +36,7 @@ export class CartListComponent {
   ];
 
   cart: Cart = {} as Cart;
+  isOpen: boolean = false;
 
   ngOnInit(): void {
     this.cartService.cart$.subscribe(cart => {
@@ -63,6 +66,7 @@ export class CartListComponent {
       next: (res) => {
         console.log(res);
         this.cartService.setCart(res);
+        this.isOpen = false;
       },
       error: (err) => {
         console.log(err);

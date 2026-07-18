@@ -1,36 +1,79 @@
 <section class="py-10">
   <div class="container">
+    @if( cart.data && cart.data.products.length) {
 
-    <app-breadcrumb
-      [breadcrumbs]="breadcrumbs"
-      [color]="'text-gray-500! hover:text-green-600!'"
-    />
+      <app-breadcrumb
+        [breadcrumbs]="breadcrumbs"
+        [color]="'text-gray-500! hover:text-green-600!'"
+      />
 
-    <app-cart-header
-      [numOfCartItems]="cart.numOfCartItems || 0"
-    />
+      <app-cart-header
+        [numOfCartItems]="cart.numOfCartItems || 0"
+      />
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-      <div class="lg:col-span-2 space-y-5">
-        @for (product of cart.data?.products; track product.product._id) {
-          <app-cart-card [product]="product" />
-        }
-        <div class="flex justify-between items-center mt-6">
-          <a routerLink="/home" class="text-green-600 font-medium text-sm transition hover:text-green-700 flex items-center gap-2">
-            <ng-icon name="heroArrowLongLeft" />
-            Continue Shopping
-          </a>
-          <button (click)="deleteCart()" class="text-sm text-gray-400 transition font-medium hover:text-red-500 flex items-center gap-2 cursor-pointer">
-            <ng-icon name="heroTrashSolid" />
-            Clear all items
-          </button>
+        <div class="lg:col-span-2 space-y-5">
+
+          @for (product of cart.data.products; track product.product._id) {
+            <app-cart-card [product]="product" />
+          }
+
+          <div class="flex justify-between items-center mt-6">
+            <a routerLink="/home" class="text-green-600 font-medium text-sm transition hover:text-green-700 flex items-center gap-2">
+              <ng-icon name="heroArrowLongLeft" />
+              Continue Shopping
+            </a>
+            <button (click)="isOpen = true" class="text-sm text-gray-400 transition font-medium hover:text-red-500 flex items-center gap-2 cursor-pointer">
+              <ng-icon name="heroTrashSolid" />
+              Clear all items
+            </button>
+          </div>
+
         </div>
+
+        <app-cart-summary [cart]="cart" />
+
       </div>
-
-      <app-cart-summary [cart]="cart" />
-
-    </div>
+    }
+    @else {
+      <div class="space-y-5 flex justify-center items-center flex-col">
+        <div class="size-32 rounded-full bg-gray-100 flex items-center justify-center">
+          <ng-icon class="size-12!" name="heroShoppingCart" />
+        </div>
+        <h2 class="text-2xl font-bold text-gray-900"> Your cart is empty </h2>
+        <p class="text-gray-500 text-sm font-medium leading-relaxed">
+          Looks like you haven't added anything to your cart yet.
+        </p>
+        <p class="text-gray-500 text-sm font-medium leading-relaxed">
+          Start exploring ourproducts!
+        </p>
+        <button routerLink="/home" class="w-fit bg-green-600 text-white py-4 px-6 rounded-xl font-semibold transition-all hover:bg-green-700 flex items-center justify-center gap-3 shadow-md cursor-pointer">
+          Start Shopping
+          <ng-icon name="heroArrowLongRight" />
+        </button>
+      </div>
+    }
 
   </div>
 </section>
+
+@if (isOpen) {
+  <div class="fixed inset-0 z-100 bg-black/20 flex items-center justify-center">
+    <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-sm text-center">
+      <div class="size-16 rounded-full bg-red-100 flex items-center justify-center text-red-600! mx-auto mb-4">
+        <ng-icon class="size-4.5!" name="heroTrashSolid" />
+      </div>
+      <h2 class="text-lg font-semibold mb-2"> Clear Your Cart? </h2>
+      <p class="text-gray-500 mb-6"> All items will be removed from your cart. </p>
+      <div class="flex justify-center gap-4">
+        <button (click)="isOpen = false" class="px-4 py-2 bg-gray-100 transition hover:bg-gray-200 cursor-pointer rounded-lg">
+          Keep Shopping
+        </button>
+        <button (click)="deleteCart()" class="px-4 py-2 bg-red-500 text-white transition hover:bg-red-600 cursor-pointer rounded-lg">
+          Yes, Clear All
+        </button>
+      </div>
+    </div>
+  </div>
+}

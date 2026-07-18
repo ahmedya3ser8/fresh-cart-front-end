@@ -28,7 +28,12 @@
     <ul class="space-y-5">
       <li class="flex justify-between items-center text-gray-600">
         <span> Subtotal </span>
-        <span class="font-medium text-gray-900"> {{ cart.data?.totalCartPrice || 0 }} EGP </span>
+        <span class="font-medium text-gray-900">
+          @if(cart.data) {
+            {{ cart.data.totalCartPrice || 0 }}
+          }
+          EGP
+        </span>
       </li>
       <li class="flex justify-between items-center text-gray-600">
         <span> Shipping </span>
@@ -36,7 +41,12 @@
       </li>
       <li class="flex justify-between items-center text-gray-600">
         <span> Total </span>
-        <span class="font-medium text-gray-900"> {{ cart.data?.totalCartPrice || 0 }} EGP </span>
+        <span class="font-medium text-gray-900">
+          @if(cart.data) {
+            {{ cart.data.totalCartPrice || 0 }}
+          }
+          EGP
+        </span>
       </li>
     </ul>
 
