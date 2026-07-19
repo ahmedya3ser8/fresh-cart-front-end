@@ -3,11 +3,12 @@ import { RouterLink } from '@angular/router';
 
 import { NgIconComponent, provideIcons } from "@ng-icons/core";
 import { heroEye, heroHeart, heroPlus, heroStar } from '@ng-icons/heroicons/outline';
-import { heroStarSolid } from '@ng-icons/heroicons/solid';
+import { heroHeartSolid, heroStarSolid } from '@ng-icons/heroicons/solid';
 
-import { Product } from '../../../features/products/models/product';
 import { CartService } from '../../../features/cart';
 import { Cart } from '../../../features/cart/models/cart';
+import { Product } from '../../../features/products/models/product';
+import { WishlistService } from '../../../features/wishlist';
 
 @Component({
   selector: 'app-product-card',
@@ -20,12 +21,14 @@ import { Cart } from '../../../features/cart/models/cart';
       heroStar,
       heroPlus,
       heroHeart,
-      heroEye
+      heroEye,
+      heroHeartSolid
     })
   ]
 })
 export class ProductCardComponent {
   private readonly cartService = inject(CartService);
+  private readonly wishlistService = inject(WishlistService);
 
   @Input({ required: true }) product!: Product;
 
@@ -43,5 +46,17 @@ export class ProductCardComponent {
         console.log(err);
       }
     })
+  }
+
+  toggleWishlist(productId: string): void {
+    if (this.isInWishlist(productId)) {
+      this.wishlistService.removeProductFromWishlist(productId);
+    } else {
+      this.wishlistService.addProductToWishlist(productId);
+    }
+  }
+
+  isInWishlist(productId: string): boolean {
+    return this.wishlistService.isInWishlist(productId);
   }
 }

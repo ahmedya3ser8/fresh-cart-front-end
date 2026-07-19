@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { HeaderComponent, FooterComponent } from "./shared";
+import { WishlistService } from './features/wishlist';
+import { AuthService } from './features/auth';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +11,14 @@ import { HeaderComponent, FooterComponent } from "./shared";
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'fresh-cart-front-end';
+  private readonly wishlistService = inject(WishlistService);
+  private readonly authService = inject(AuthService);
+
+  ngOnInit(): void {
+    if (this.authService.isLoggedIn()) {
+      this.wishlistService.loadWishlist();
+    }
+  }
 }

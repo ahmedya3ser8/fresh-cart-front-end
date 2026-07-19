@@ -40,6 +40,10 @@ export const routes: Routes = [
         path: 'cart',
         loadChildren: () => import('./features/cart/cart.routes').then((r) => r.CART_ROUTES)
       },
+      {
+        path: 'wishlist',
+        loadChildren: () => import('./features/wishlist/wishlist.routes').then((r) => r.WISHLIST_ROUTES)
+      },
     ]
   },
 ];

@@ -6,8 +6,13 @@
     </span>
   }
   <div class="absolute top-3 right-3 translate-x-10 transition-all duration-700 group-hover:translate-x-0 flex flex-col gap-2">
-    <button class="bg-white size-8 rounded-full flex justify-center items-center text-gray-600 cursor-pointer shadow-sm transition hover:text-red-500">
-      <ng-icon name="heroHeart" />
+    <button (click)="toggleWishlist(product._id)" class="bg-white size-8 rounded-full flex justify-center items-center text-gray-600 cursor-pointer shadow-sm transition hover:text-red-500">
+      @if (isInWishlist(product._id)) {
+        <ng-icon class="text-red-500!" name="heroHeartSolid" />
+      }
+      @else {
+        <ng-icon name="heroHeart" />
+      }
     </button>
     <button [routerLink]="['/products', product._id]" class="bg-white size-8 rounded-full flex justify-center items-center text-gray-600 cursor-pointer shadow-sm transition hover:text-emerald-600">
       <ng-icon name="heroEye" />
