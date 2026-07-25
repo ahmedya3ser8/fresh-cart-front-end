@@ -22,13 +22,14 @@ import { heroArrowSmallRight } from '@ng-icons/heroicons/outline';
     provideIcons({ heroArrowSmallRight })
   ]
 })
-export class CategoryCarouselComponent implements AfterViewInit, OnInit {
-  categories: Category[] = [];
-
+export class CategoryCarouselComponent implements OnInit, AfterViewInit {
   @ViewChild('swiperRef') swiperRef!: ElementRef<SwiperContainer>;
 
   private readonly platformId = inject(PLATFORM_ID);
   private readonly categoryService = inject(CategoryService);
+
+  categories: Category[] = [];
+  isLoading = false;
 
   swiperConfig: SwiperOptions = {
     slidesPerView: 2,
@@ -54,14 +55,23 @@ export class CategoryCarouselComponent implements AfterViewInit, OnInit {
   }
 
   loadCategories(): void {
+    this.isLoading = true;
     this.categoryService.getAll().subscribe({
       next: (res) => {
         if (res.data) {
-          this.categories = res.data;
+          this.categories = res.data ?? [];
+          this.isLoading = false;
+          requestAnimationFrame(() => {
+            const swiperEl = this.swiperRef.nativeElement.swiper;
+            if (swiperEl) {
+              swiperEl.update();
+            }
+          })
         }
       },
       error: (err) => {
         console.log(err);
+          this.isLoading = false;
       }
     })
   }

@@ -23,6 +23,8 @@ export class BrandListComponent implements OnInit {
   private readonly brandService = inject(BrandService);
 
   brands: Brand[] = [];
+  isLoading = false;
+
   breadcrumbs = [
     { label: 'Home', link: '/home' },
     { label: 'Brands' },
@@ -33,13 +35,16 @@ export class BrandListComponent implements OnInit {
   }
 
   loadBrands(): void {
+    this.isLoading = true;
     this.brandService.getAll().subscribe({
       next: (res) => {
         console.log(res);
         this.brands = res.data;
+        this.isLoading = false;
       },
       error: (err) => {
         console.log(err);
+        this.isLoading = false;
       }
     })
   }

@@ -10,8 +10,8 @@ import { CartCardComponent } from "../../components/cart-card/cart-card.componen
 import { CartHeaderComponent } from "../../components/cart-header/cart-header.component";
 import { CartSummaryComponent } from "../../components/cart-summary/cart-summary.component";
 
-import { Cart } from '../../models/cart';
 import { CartService } from '../../services';
+import { Cart } from '../../models/cart';
 
 @Component({
   selector: 'app-cart-list',
@@ -35,42 +35,18 @@ export class CartListComponent {
     { label: 'Shopping Cart' }
   ];
 
-  cart: Cart = {} as Cart;
   isOpen: boolean = false;
 
-  ngOnInit(): void {
-    this.cartService.cart$.subscribe(cart => {
-      if (cart) {
-        this.cart = cart;
-      }
-    });
-    if (!this.cartService.currentCart) {
-      this.loadCart();
-    }
+  get cart(): Cart | null {
+    return this.cartService.cart.value;
   }
 
-  loadCart(): void {
-    this.cartService.get().subscribe({
-      next: (res) => {
-        console.log(res);
-        this.cartService.setCart(res);
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+  ngOnInit(): void {
+    this.cartService.loadCart();
   }
 
   deleteCart(): void {
-    this.cartService.delete<Cart>().subscribe({
-      next: (res) => {
-        console.log(res);
-        this.cartService.setCart(res);
-        this.isOpen = false;
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+    this.cartService.deleteCart();
+    this.isOpen = false;
   }
 }

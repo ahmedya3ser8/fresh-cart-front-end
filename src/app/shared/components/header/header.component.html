@@ -104,7 +104,7 @@
         <a routerLink="/cart" class="relative p-2 rounded-full transition hover:text-emerald-600! hover:bg-gray-50">
           <ng-icon class="size-7!" name="heroShoppingCart" />
           <span class="absolute top-0.5 right-0.5 size-4.5 rounded-full bg-green-600 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-white">
-            {{ cart?.numOfCartItems || 0 }}
+            {{ cart.value?.numOfCartItems || 0 }}
           </span>
         </a>
         @if (isLoggedIn) {

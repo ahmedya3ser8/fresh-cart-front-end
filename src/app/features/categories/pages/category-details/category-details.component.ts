@@ -8,12 +8,12 @@ import { CategoryService } from '../../services';
 import { ProductService } from '../../../products';
 import { Category } from '../../models/category';
 import { Product } from '../../../products/models/product';
-import { ProductCardComponent, PageHeaderComponent, BreadcrumbComponent } from "../../../../shared";
+import { ProductCardComponent, PageHeaderComponent, BreadcrumbComponent, ProductCardSkeletonComponent } from "../../../../shared";
 import { Breadcrumb } from '../../../../core';
 
 @Component({
   selector: 'app-category-details',
-  imports: [NgIconComponent, ProductCardComponent, PageHeaderComponent, RouterLink, BreadcrumbComponent],
+  imports: [NgIconComponent, ProductCardComponent, PageHeaderComponent, RouterLink, BreadcrumbComponent, ProductCardSkeletonComponent],
   templateUrl: './category-details.component.html',
   styleUrl: './category-details.component.css',
   providers: [
@@ -32,6 +32,7 @@ export class CategoryDetailsComponent implements OnInit {
   category: Category = {} as Category;
   products: Product[] = [];
   breadcrumbs: Breadcrumb[] = [];
+  isLoading = false;
 
   ngOnInit(): void {
     this.getCategoryId();
@@ -66,13 +67,16 @@ export class CategoryDetailsComponent implements OnInit {
   }
 
   loadProducts(): void {
+    this.isLoading = true;
     this.productService.getAll({ categoryId: this.categoryId }).subscribe({
       next: (res) => {
         console.log(res);
         this.products = res.data;
+        this.isLoading = false;
       },
       error: (err) => {
         console.log(err);
+        this.isLoading = false;
       }
     })
   }

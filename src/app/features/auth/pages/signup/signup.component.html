@@ -38,11 +38,9 @@
             <div class="space-y-0.5">
               <h3> Sarah Johnson </h3>
               <div class="text-yellow-300">
-                <ng-icon class="size-5!" name="heroStarSolid" />
-                <ng-icon class="size-5!" name="heroStarSolid" />
-                <ng-icon class="size-5!" name="heroStarSolid" />
-                <ng-icon class="size-5!" name="heroStarSolid" />
-                <ng-icon class="size-5!" name="heroStarSolid" />
+                @for (star of [1,2,3,4,5]; track star) {
+                  <ng-icon class="size-5!" name="heroStarSolid" />
+                }
               </div>
             </div>
           </div>
@@ -114,8 +112,12 @@
             }
           </div>
           <button type="submit" class="w-full px-2 py-3 bg-emerald-600 rounded-md text-white cursor-pointer flex items-center justify-center gap-2 transition hover:bg-emerald-700">
-            <ng-icon class="size-5!" name="heroUserPlus" />
-            Create My Account
+            @if(isLoading) {
+              Creating account...
+            } @else {
+              <ng-icon class="size-5!" name="heroUserPlus" />
+              Create My Account
+            }
           </button>
         </form>
 

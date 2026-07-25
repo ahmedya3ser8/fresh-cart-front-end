@@ -24,7 +24,9 @@ import { Wishlist } from '../../models';
 export class WishlistComponent implements OnInit {
   private readonly wishlistService = inject(WishlistService);
 
-  wishlist = this.wishlistService.wishlist;
+  get wishlist(): Wishlist | null {
+    return this.wishlistService.wishlist.value;
+  }
 
   breadcrumbs = [
     { label: 'Home', link: '/home' },

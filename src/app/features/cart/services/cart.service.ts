@@ -13,15 +13,69 @@ export class CartService extends BaseHttpService<Cart, CreateCartDto, UpdateCart
     return API_ENDPOINTS.CART.BASE;
   }
 
-  private readonly cartSubject = new BehaviorSubject<Cart | null>(null);
+  cart = new BehaviorSubject<Cart | null>(null);
+  isLoading = new BehaviorSubject<boolean>(false);
 
-  readonly cart$ = this.cartSubject.asObservable();
-
-  get currentCart(): Cart | null {
-    return this.cartSubject.value;
+  loadCart(): void {
+    this.isLoading.next(true);
+    this.get().subscribe({
+      next: (res) => {
+        console.log(res);
+        this.cart.next(res);
+        this.isLoading.next(false);
+      },
+      error: (err) => {
+        console.log(err);
+        this.isLoading.next(false);
+      }
+    })
   }
 
-  setCart(cart: Cart | null): void {
-    this.cartSubject.next(cart);
+  deleteCart(): void {
+    this.delete<Cart>().subscribe({
+      next: (res) => {
+        console.log(res);
+        this.cart.next(res);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  addProductToCart(productId: string): void {
+    this.post<Cart>('', { productId }).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.cart.next(res);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  updateQuantity(productId: string, count: number): void {
+    this.put<Cart>(productId, { count }).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.cart.next(res);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  deleteProduct(productId: string): void {
+    this.delete<Cart>(productId).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.cart.next(res);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 }

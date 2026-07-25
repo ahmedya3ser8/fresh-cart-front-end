@@ -5,7 +5,7 @@ import { NgIconComponent, provideIcons } from "@ng-icons/core";
 import { heroMinus, heroPlus } from '@ng-icons/heroicons/outline';
 import { heroTrashSolid } from '@ng-icons/heroicons/solid';
 
-import { Cart, CartProduct } from '../../models/cart';
+import { CartProduct } from '../../models/cart';
 import { CartService } from '../../services';
 
 @Component({
@@ -27,26 +27,10 @@ export class CartCardComponent {
   @Input({ required: true }) product!: CartProduct;
 
   deleteProduct(productId: string): void {
-    this.cartService.delete<Cart>(productId).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.cartService.setCart(res);
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+    this.cartService.deleteProduct(productId);
   }
 
   updateQuantity(productId: string, count: number): void {
-    this.cartService.put<Cart>(productId, { count }).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.cartService.setCart(res);
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+    this.cartService.updateQuantity(productId, count);
   }
 }

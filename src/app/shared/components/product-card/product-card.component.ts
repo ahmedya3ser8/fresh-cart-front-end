@@ -6,7 +6,6 @@ import { heroEye, heroHeart, heroPlus, heroStar } from '@ng-icons/heroicons/outl
 import { heroHeartSolid, heroStarSolid } from '@ng-icons/heroicons/solid';
 
 import { CartService } from '../../../features/cart';
-import { Cart } from '../../../features/cart/models/cart';
 import { Product } from '../../../features/products/models/product';
 import { WishlistService } from '../../../features/wishlist';
 
@@ -37,15 +36,7 @@ export class ProductCardComponent {
   }
 
   addProductToCart(productId: string): void {
-    this.cartService.post<Cart>('', { productId }).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.cartService.setCart(res);
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+    this.cartService.addProductToCart(productId);
   }
 
   toggleWishlist(productId: string): void {

@@ -18,4 +18,7 @@ export const API_ENDPOINTS = {
   WISHLIST: {
     BASE: '/v1/wishlist'
   },
+  ORDER: {
+    BASE: '/v1/orders'
+  },
 } as const;

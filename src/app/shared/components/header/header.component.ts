@@ -6,7 +6,6 @@ import { heroArrowRightOnRectangle, heroClipboardDocumentList, heroCog6Tooth, he
 import { heroChatBubbleLeftRightSolid, heroEnvelopeSolid, heroGiftSolid, heroPhoneSolid, heroTruckSolid, heroUserPlusSolid, heroUserSolid } from '@ng-icons/heroicons/solid';
 import { AuthService, User } from '../../../features/auth';
 import { CartService } from '../../../features/cart';
-import { Cart } from '../../../features/cart/models/cart';
 
 @Component({
   selector: 'app-header',
@@ -40,7 +39,7 @@ export class HeaderComponent implements OnInit {
   @ViewChild('dropDownContainer') dropDownContainer!: ElementRef;
 
   currentUser: User | null = null;
-  cart: Cart | null = null;
+  cart = this.cartService.cart;
 
   isDropDownOpen: boolean = false;
   isLoggedIn: boolean = false;
@@ -52,16 +51,6 @@ export class HeaderComponent implements OnInit {
         this.isLoggedIn = !!user;
       }
     });
-
-    this.cartService.cart$.subscribe(cart => {
-      this.cart = cart;
-    });
-
-    if (!this.cartService.currentCart) {
-      this.cartService.get().subscribe({
-        next: cart => this.cartService.setCart(cart)
-      });
-    }
   }
 
   logout(): void {

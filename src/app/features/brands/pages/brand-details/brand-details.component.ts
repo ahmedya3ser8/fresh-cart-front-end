@@ -4,7 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { heroTagSolid } from '@ng-icons/heroicons/solid';
 
-import { PageHeaderComponent, ProductCardComponent, BreadcrumbComponent } from "../../../../shared";
+import { PageHeaderComponent, ProductCardComponent, BreadcrumbComponent, ProductCardSkeletonComponent } from "../../../../shared";
 import { BrandService } from '../../services';
 import { Brand } from '../../models/brand';
 import { ProductService } from '../../../products';
@@ -13,7 +13,7 @@ import { Breadcrumb } from '../../../../core';
 
 @Component({
   selector: 'app-brand-details',
-  imports: [PageHeaderComponent, ProductCardComponent, NgIcon, RouterLink, BreadcrumbComponent],
+  imports: [PageHeaderComponent, ProductCardComponent, NgIcon, RouterLink, BreadcrumbComponent, ProductCardSkeletonComponent],
   templateUrl: './brand-details.component.html',
   styleUrl: './brand-details.component.css',
   providers: [
@@ -31,6 +31,7 @@ export class BrandDetailsComponent implements OnInit {
   brand: Brand = {} as Brand;
   products: Product[] = [];
   breadcrumbs: Breadcrumb[] = [];
+  isLoading = false;
 
   ngOnInit(): void {
     this.getBrandId();
@@ -65,13 +66,16 @@ export class BrandDetailsComponent implements OnInit {
   }
 
   loadProducts(): void {
+    this.isLoading = true;
     this.productService.getAll({ brandId: this.brandId }).subscribe({
       next: (res) => {
         console.log(res);
         this.products = res.data;
+        this.isLoading = false;
       },
       error: (err) => {
         console.log(err);
+        this.isLoading = false;
       }
     })
   }

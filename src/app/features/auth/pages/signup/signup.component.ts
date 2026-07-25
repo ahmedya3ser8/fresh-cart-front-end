@@ -49,6 +49,7 @@ export class SignupComponent implements OnInit {
   private readonly router = inject(Router);
 
   form!: FormGroup;
+  isLoading = false;
 
   ngOnInit(): void {
     this.initForm();
@@ -66,6 +67,7 @@ export class SignupComponent implements OnInit {
 
   submitForm(): void {
     if (this.form.valid) {
+      this.isLoading = true;
       console.log(this.form.value);
       this.authService.signup(this.form.value).subscribe({
         next: (res) => {
@@ -76,11 +78,13 @@ export class SignupComponent implements OnInit {
               console.log('Navigation success:', success);
             }).catch(err => {
               console.error('Navigation error:', err);
-            })
+            });
+            this.isLoading = false;
           }
         },
         error: (err) => {
           console.log(err.error.message);
+          this.isLoading = false;
         }
       })
     } else {

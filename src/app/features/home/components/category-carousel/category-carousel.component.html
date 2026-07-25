@@ -13,13 +13,25 @@
     </app-section-heading>
 
     <swiper-container #swiperRef init="false">
-      @for (category of categories; track category._id) {
-        <swiper-slide class="py-2">
-          <div [routerLink]="['/categories', category._id]" class="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-center items-center gap-3 cursor-pointer transition hover:shadow-md">
-            <img [src]="category.image" class="w-20 h-20 rounded-full" [alt]="category.name" />
-            <h3 class="font-medium"> {{ category.name }} </h3>
-          </div>
-        </swiper-slide>
+      @if (isLoading) {
+        @for (_ of [1,2,3,4,5,6]; track $index) {
+          <swiper-slide class="py-2">
+            <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col items-center gap-3 animate-pulse">
+              <div class="size-20 rounded-full bg-gray-200"></div>
+              <div class="h-4 w-24 rounded bg-gray-200"></div>
+            </div>
+          </swiper-slide>
+        }
+      }
+      @else {
+        @for (category of categories; track category._id) {
+          <swiper-slide class="py-2">
+            <div [routerLink]="['/categories', category._id]" class="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-center items-center gap-3 cursor-pointer transition hover:shadow-md">
+              <img [src]="category.image" class="w-20 h-20 rounded-full" [alt]="category.name" />
+              <h3 class="font-medium"> {{ category.name }} </h3>
+            </div>
+          </swiper-slide>
+        }
       }
     </swiper-container>
 

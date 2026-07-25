@@ -62,7 +62,11 @@
           </div>
           <a routerLink="/auth/forget-password" class="text-emerald-600 transition ms-auto hover:underline"> Forgot Password? </a>
           <button type="submit" class="w-full px-2 py-3 bg-emerald-600 rounded-md text-white cursor-pointer transition hover:bg-emerald-700">
-            Sign In
+            @if (isLoading) {
+              Sign In...
+            } @else {
+              Sign In
+            }
           </button>
         </form>
 

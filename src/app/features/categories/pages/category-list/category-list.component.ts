@@ -23,6 +23,8 @@ export class CategoryListComponent implements OnInit {
   private readonly categoryService = inject(CategoryService);
 
   categories: Category[] = [];
+  isLoading = false;
+
   breadcrumbs = [
     { label: 'Home', link: '/home' },
     { label: 'Categories' },
@@ -33,13 +35,16 @@ export class CategoryListComponent implements OnInit {
   }
 
   loadCategories(): void {
+    this.isLoading = true;
     this.categoryService.getAll().subscribe({
       next: (res) => {
         console.log(res);
         this.categories = res.data;
+        this.isLoading = false;
       },
       error: (err) => {
         console.log(err);
+        this.isLoading = false;
       }
     })
   }

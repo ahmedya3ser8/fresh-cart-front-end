@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { RouterLink } from "@angular/router";
 
 import { NgIconComponent, provideIcons } from "@ng-icons/core";
 import { heroTruck } from '@ng-icons/heroicons/outline';
@@ -8,7 +9,7 @@ import { Cart } from '../../models/cart';
 
 @Component({
   selector: 'app-cart-summary',
-  imports: [NgIconComponent],
+  imports: [NgIconComponent, RouterLink],
   templateUrl: './cart-summary.component.html',
   styleUrl: './cart-summary.component.css',
   providers: [
