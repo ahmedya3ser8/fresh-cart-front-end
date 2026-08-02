@@ -42,8 +42,8 @@ export abstract class BaseHttpService<TEntity, TCreate = never, TUpdate = never>
     return this.http.delete<ApiResponse<TEntity>>(`${this.baseUrl}/${id}`);
   }
 
-  get(): Observable<TEntity> {
-    return this.http.get<TEntity>(this.baseUrl);
+  get<T>(endpoint: string = ''): Observable<T> {
+    return this.http.get<T>(`${this.baseUrl}${endpoint}`);
   }
 
   post<T>(endpoint: string, body: any): Observable<T> {

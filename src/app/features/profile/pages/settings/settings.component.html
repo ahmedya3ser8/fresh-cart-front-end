@@ -1,0 +1,24 @@
+<app-page-header
+  [title]="'My Account'"
+  [description]="'Manage your addresses and account settings'"
+  [icon]="'heroUserSolid'"
+  [gradiant]="'bg-linear-to-br from-green-600 via-green-500 to-green-400'"
+>
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" />
+</app-page-header>
+
+<section class="py-10">
+  <div class="container">
+
+    <div class="space-y-1">
+      <h2 class="text-xl font-bold text-gray-900"> Account Settings </h2>
+      <p class="text-gray-500 text-sm"> Update your profile information and change your password </p>
+    </div>
+
+    <app-profile-info />
+
+    <app-change-password />
+
+  </div>
+</section>
+

@@ -18,7 +18,7 @@ export class CartService extends BaseHttpService<Cart, CreateCartDto, UpdateCart
 
   loadCart(): void {
     this.isLoading.next(true);
-    this.get().subscribe({
+    this.get<Cart>().subscribe({
       next: (res) => {
         console.log(res);
         this.cart.next(res);

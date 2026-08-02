@@ -70,7 +70,7 @@
   </div>
 
   <div class="flex items-center gap-4">
-    <button class="w-full lg:w-1/2 px-6 py-4 rounded-xl font-medium bg-green-600 text-white transition hover:bg-green-700 flex items-center justify-center gap-2 cursor-pointer">
+    <button (click)="addToCart(product._id)" class="w-full lg:w-1/2 px-6 py-4 rounded-xl font-medium bg-green-600 text-white transition hover:bg-green-700 flex items-center justify-center gap-2 cursor-pointer">
       <ng-icon name="heroShoppingCartSolid" />
       Add to Cart
     </button>
@@ -81,7 +81,7 @@
   </div>
 
   <div class="flex items-center gap-4">
-    <button class="flex-1 px-6 py-4 rounded-xl border-2 border-gray-200 font-medium bg-transparent text-gray-700 transition hover:border-green-500 hover:text-green-600 flex items-center justify-center gap-2 cursor-pointer">
+    <button (click)="addToWishlist(product._id)" class="flex-1 px-6 py-4 rounded-xl border-2 border-gray-200 font-medium bg-transparent text-gray-700 transition hover:border-green-500 hover:text-green-600 flex items-center justify-center gap-2 cursor-pointer">
       <ng-icon name="heroHeart" />
       Add to Wishlist
     </button>

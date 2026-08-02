@@ -1,0 +1,58 @@
+<div class="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 space-y-5 my-6">
+  <div class="flex items-center gap-4">
+    <div class="size-14 rounded-2xl bg-green-100 text-green-600 flex items-center justify-center">
+      <ng-icon class="size-6!" name="heroUserSolid" />
+    </div>
+    <div class="space-y-0.5">
+      <h3 class="font-bold text-gray-900"> Profile Information </h3>
+      <p class="text-sm text-gray-500"> Update your personal details </p>
+    </div>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="submitForm()" class="space-y-5">
+    <div class="space-y-2">
+      <label for="name" class="block font-medium"> Full Name </label>
+      <input type="text" id="name" formControlName="name" class="form-control" placeholder="Enter your name" />
+      @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
+        <p class="text-sm text-red-500"> Name is required </p>
+      }
+    </div>
+    <div class="space-y-2">
+      <label for="email" class="block font-medium"> Email Address </label>
+      <input type="email" id="email" formControlName="email" class="form-control" placeholder="Enter your email" />
+      @if (form.get('email')?.hasError('required') && form.get('email')?.touched) {
+        <p class="text-sm text-red-500"> Email address is required </p>
+      }
+      @else if (form.get('email')?.hasError('email')) {
+        <p class="text-sm text-red-500"> Please enter a valid email address </p>
+      }
+    </div>
+    <div class="space-y-2">
+      <label for="phone" class="block font-medium"> Phone Number </label>
+      <input type="tel" id="phone" formControlName="phone" class="form-control" placeholder="Enter your phone" />
+      @if (form.get('phone')?.hasError('required') && form.get('phone')?.touched) {
+        <p class="text-sm text-red-500"> Phone number is required </p>
+      }
+      @else if (form.get('phone')?.hasError('pattern')) {
+        <p class="text-sm text-red-500"> Please enter a valid egyptian phone number </p>
+      }
+    </div>
+    <button type="submit" class="px-6 py-3 bg-green-600 rounded-xl cursor-pointer text-white font-semibold transition hover:bg-green-700 flex items-center gap-2">
+      <ng-icon name="heroLockClosedSolid" />
+      Save Changes
+    </button>
+  </form>
+  <div class="bg-gray-50 pt-6 space-y-4">
+    <h3 class="font-bold text-gray-900"> Account Information </h3>
+    <ul class="space-y-3">
+      <li class="flex items-center justify-between">
+        <span class="text-gray-500"> User ID </span>
+        <span class="text-gray-700"> {{ userInfo?.id }} </span>
+      </li>
+      <li class="flex items-center justify-between">
+        <span class="text-gray-500"> Role </span>
+        <span class="px-3 py-1 bg-green-100 text-green-700 font-medium capitalize rounded-lg"> {{ userInfo?.role }} </span>
+      </li>
+    </ul>
+  </div>
+</div>
+

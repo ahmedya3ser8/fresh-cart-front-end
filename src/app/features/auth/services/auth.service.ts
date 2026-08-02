@@ -1,10 +1,11 @@
+import { isPlatformBrowser } from '@angular/common';
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { isPlatformBrowser } from '@angular/common';
 
-import { BaseHttpService } from '../../../core';
+import { jwtDecode } from 'jwt-decode';
 import { API_ENDPOINTS, APP_CONSTANTS } from '../../../constants';
-import { AuthResponse, SigninForm, SignupForm, User } from '../models/auth';
+import { BaseHttpService } from '../../../core';
+import { AuthResponse, ChangePassForm, DecodedToken, ForgotPasswordResponse, ResetPasswordResponse, SigninForm, SignupForm, UpdateUserForm, User, UserDataResponse, VerifyCodeResponse } from '../models/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +56,41 @@ export class AuthService extends BaseHttpService<AuthResponse> {
     this.currentUserSubject.next(null);
   }
 
+  updateLoggedUserData(endpoint: string, form: UpdateUserForm): Observable<UserDataResponse> {
+    return this.put<UserDataResponse>(endpoint, form).pipe(
+      tap(res => {
+        console.log('updateLoggedUserData', res);
+        localStorage.setItem(APP_CONSTANTS.USER_KEY, JSON.stringify(res.user));
+        this.currentUserSubject.next(res.user);
+      })
+    );
+  }
+
+  updateLoggedUserPassword(endpoint: string, form: ChangePassForm): Observable<AuthResponse> {
+    return this.put<AuthResponse>(endpoint, form).pipe(
+      tap(res => {
+        console.log('updateLoggedUserPassword', res);
+        if (res.token) {
+          this.setSession(res);
+        }
+      })
+    );
+  }
+
+  forgotPassword(form: { email: string }): Observable<ForgotPasswordResponse> {
+    return this.post<ForgotPasswordResponse>('/v1/auth/forgotPasswords', form);
+  }
+
+  verifyResetCode(form: { resetCode: string }): Observable<VerifyCodeResponse> {
+    return this.post<VerifyCodeResponse>('/v1/auth/verifyResetCode', form);
+  }
+
+  resetPassword(form: { email: string, newPassword: string }): Observable<ResetPasswordResponse> {
+    return this.put<ResetPasswordResponse>('/v1/auth/resetPassword', form).pipe(
+      tap(res => localStorage.setItem(APP_CONSTANTS.TOKEN_KEY, res.token))
+    );
+  }
+
   private setSession(res: AuthResponse): void {
     console.log('Setting session with token:', res.token);
     localStorage.setItem(APP_CONSTANTS.TOKEN_KEY, res.token);
@@ -78,5 +114,19 @@ export class AuthService extends BaseHttpService<AuthResponse> {
       return null;
     }
     return localStorage.getItem(APP_CONSTANTS.TOKEN_KEY);
+  }
+
+  getUserInfoFromToken(): DecodedToken | null {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+    try {
+      const decoded = jwtDecode<DecodedToken>(token);
+      return decoded;
+    } catch (error) {
+      console.error('Invalid token', error);
+      return null;
+    }
   }
 }

@@ -1,3 +1,4 @@
+import { User } from "../../auth";
 import { CartProduct } from "../../cart/models/cart";
 
 export interface Order {
@@ -7,7 +8,7 @@ export interface Order {
 
 export interface OrderData {
   _id: string;
-  user: string;
+  user: User;
   totalOrderPrice: number;
   taxPrice: number;
   shippingPrice: number;
@@ -17,6 +18,8 @@ export interface OrderData {
   id: number;
   shippingAddress: ShippingAddress;
   cartItems: CartProduct[];
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface ShippingAddress {

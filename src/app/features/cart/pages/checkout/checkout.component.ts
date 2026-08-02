@@ -8,7 +8,7 @@ import { BreadcrumbComponent } from "../../../../shared";
 import { CartService } from '../../services';
 import { Cart } from '../../models/cart';
 import { OrderService } from '../../../orders';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkout',
@@ -36,6 +36,7 @@ export class CheckoutComponent implements OnInit {
   private readonly cartService = inject(CartService);
   private readonly orderService = inject(OrderService);
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
   payment: string = 'cash';
   cartId!: string;
@@ -76,14 +77,40 @@ export class CheckoutComponent implements OnInit {
       console.log(this.form.value);
       console.log(this.payment);
       if (this.payment === 'cash') {
-        this.orderService.createCashOrder(this.cartId, this.form.value);
+        this.createCashOrder();
       } else {
-        this.orderService.createOnlineOrder(this.cartId, this.form.value);
+        this.createOnlineOrder();
       }
     }
     else {
       this.form.markAllAsTouched();
     }
+  }
+
+  createCashOrder(): void {
+    this.orderService.createCashOrder(this.cartId, this.form.value).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.cartService.loadCart();
+        this.router.navigateByUrl('/home');
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
+
+  createOnlineOrder(): void {
+    this.orderService.createOnlineOrder(this.cartId, this.form.value).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.cartService.loadCart();
+        location.assign(res.session.url);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
   }
 
   paymentMethod(e: Event): void {

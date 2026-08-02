@@ -7,6 +7,8 @@ import { heroHeartSolid, heroShoppingCartSolid, heroTrashSolid } from '@ng-icons
 import { BreadcrumbComponent } from "../../../../shared";
 import { WishlistService } from '../../services';
 import { Wishlist } from '../../models';
+import { heroArrowLongRight, heroHeart } from '@ng-icons/heroicons/outline';
+import { CartService } from '../../../cart';
 
 @Component({
   selector: 'app-wishlist',
@@ -17,12 +19,15 @@ import { Wishlist } from '../../models';
     provideIcons({
       heroHeartSolid,
       heroShoppingCartSolid,
-      heroTrashSolid
+      heroTrashSolid,
+      heroHeart,
+      heroArrowLongRight
     })
   ]
 })
 export class WishlistComponent implements OnInit {
   private readonly wishlistService = inject(WishlistService);
+  private readonly cartService = inject(CartService);
 
   get wishlist(): Wishlist | null {
     return this.wishlistService.wishlist.value;
@@ -39,5 +44,9 @@ export class WishlistComponent implements OnInit {
 
   removeProductFromWishlist(productId: string): void {
     this.wishlistService.removeProductFromWishlist(productId);
+  }
+
+  addToCart(productId: string): void {
+    this.cartService.addProductToCart(productId);
   }
 }

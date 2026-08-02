@@ -1,62 +1,79 @@
 <section class="py-10">
   <div class="container">
 
-    <app-breadcrumb
-      [breadcrumbs]="breadcrumbs"
-      [color]="'text-gray-500! hover:text-green-600!'"
-    />
+    @if (wishlist && wishlist.data.length) {
+      <app-breadcrumb
+        [breadcrumbs]="breadcrumbs"
+        [color]="'text-gray-500! hover:text-green-600!'"
+      />
 
-    <div class="flex items-center gap-4 py-8">
-      <div class="size-12 rounded-xl bg-red-50 flex items-center justify-center text-red-500!">
-        <ng-icon class="size-6!" name="heroHeartSolid" />
+      <div class="flex items-center gap-4 py-8">
+        <div class="size-12 rounded-xl bg-red-50 flex items-center justify-center text-red-500!">
+          <ng-icon class="size-6!" name="heroHeartSolid" />
+        </div>
+        <div class="space-y-0.5">
+          <h1 class="text-2xl font-bold text-gray-900"> My Wishlist </h1>
+          <p class="text-gray-500 text-sm"> {{ wishlist.count || 0 }} items saved </p>
+        </div>
       </div>
-      <div class="space-y-0.5">
-        <h1 class="text-2xl font-bold text-gray-900"> My Wishlist </h1>
-        <p class="text-gray-500 text-sm"> {{ wishlist?.count || 0 }} items saved </p>
-      </div>
-    </div>
 
-    <div class="bg-white rounded-2xl border border-gray-100">
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 bg-gray-50 border-b border-gray-100 text-sm font-medium text-gray-500 px-6 py-4">
-        <div class="col-span-6"> Product </div>
-        <div class="col-span-2"> Price </div>
-        <div class="col-span-2"> Status </div>
-        <div class="col-span-2"> Actions </div>
+      <div class="bg-white rounded-2xl border border-gray-100">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 bg-gray-50 border-b border-gray-100 text-sm font-medium text-gray-500 px-6 py-4">
+          <div class="col-span-6"> Product </div>
+          <div class="col-span-2"> Price </div>
+          <div class="col-span-2"> Status </div>
+          <div class="col-span-2"> Actions </div>
+        </div>
+        <div class="divide-y divide-gray-100">
+          @for (product of wishlist.data; track product._id) {
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 p-4 md:px-6 md:py-5 items-center transition hover:bg-gray-50/50">
+              <div class="col-span-6 flex items-center gap-4">
+                <div [routerLink]="['/products', product._id]" class="size-20 cursor-pointer rounded-xl bg-gray-50 border border-gray-100">
+                  <img [src]="product.imageCover" class="w-full h-full object-contain p-2" [alt]="product.title" />
+                </div>
+                <div class="space-y-0.5">
+                  <h3 class="font-medium text-gray-900 transition hover:text-green-600 line-clamp-2"> {{ product.title }} </h3>
+                  <h4 class="text-sm text-gray-400"> {{ product.category.name }} </h4>
+                </div>
+              </div>
+              <div class="col-span-2 font-semibold text-gray-900">
+                {{ product.price }} EGP
+              </div>
+              <div class="col-span-2">
+                <div class="bg-green-50 text-green-700 px-3 py-1.5 rounded-full text-sm flex items-center gap-1.5 w-fit">
+                  <span class="size-1.5 bg-green-500 rounded-full"></span>
+                  In Stock
+                </div>
+              </div>
+              <div class="col-span-2 flex items-center gap-2">
+                <button (click)="addToCart(product._id)" class="px-3 py-2.5 rounded-lg text-sm font-medium bg-green-600 transition hover:bg-green-700 text-white flex items-center justify-center gap-2">
+                  <ng-icon name="heroShoppingCartSolid" />
+                  Add to Cart
+                </button>
+                <button (click)="removeProductFromWishlist(product._id)" class="size-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-400 transition hover:text-red-500 hover:border-red-200 hover:bg-red-50">
+                  <ng-icon name="heroTrashSolid" />
+                </button>
+              </div>
+            </div>
+          }
+        </div>
       </div>
-      <div class="divide-y divide-gray-100">
-        @for (product of wishlist?.data; track product._id) {
-          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 p-4 md:px-6 md:py-5 items-center transition hover:bg-gray-50/50">
-            <div class="col-span-6 flex items-center gap-4">
-              <div [routerLink]="['/products', product._id]" class="size-20 cursor-pointer rounded-xl bg-gray-50 border border-gray-100">
-                <img [src]="product.imageCover" class="w-full h-full object-contain p-2" [alt]="product.title" />
-              </div>
-              <div class="space-y-0.5">
-                <h3 class="font-medium text-gray-900 transition hover:text-green-600 line-clamp-2"> {{ product.title }} </h3>
-                <h4 class="text-sm text-gray-400"> {{ product.category.name }} </h4>
-              </div>
-            </div>
-            <div class="col-span-2 font-semibold text-gray-900">
-              {{ product.price }} EGP
-            </div>
-            <div class="col-span-2">
-              <div class="bg-green-50 text-green-700 px-3 py-1.5 rounded-full text-sm flex items-center gap-1.5 w-fit">
-                <span class="size-1.5 bg-green-500 rounded-full"></span>
-                In Stock
-              </div>
-            </div>
-            <div class="col-span-2 flex items-center gap-2">
-              <button class="px-3 py-2.5 rounded-lg text-sm font-medium bg-green-600 transition hover:bg-green-700 text-white flex items-center justify-center gap-2">
-                <ng-icon name="heroShoppingCartSolid" />
-                Add to Cart
-              </button>
-              <button (click)="removeProductFromWishlist(product._id)" class="size-10 rounded-lg border border-gray-200 flex items-center justify-center text-gray-400 transition hover:text-red-500 hover:border-red-200 hover:bg-red-50">
-                <ng-icon name="heroTrashSolid" />
-              </button>
-            </div>
-          </div>
-        }
+    }
+    @else {
+      <div class="space-y-5 flex justify-center items-center flex-col">
+        <div class="size-32 rounded-full bg-gray-100 flex items-center justify-center">
+          <ng-icon class="size-12!" name="heroHeart" />
+        </div>
+        <h2 class="text-2xl font-bold text-gray-900"> Your wishlist is empty </h2>
+        <p class="text-gray-500 text-sm font-medium leading-relaxed text-center">
+          Browse products and save your favorites here. Sign in to <br> sync your wishlist across devices.
+        </p>
+        <button routerLink="/products" class="w-fit bg-green-600 text-white py-4 px-6 rounded-xl font-semibold transition-all hover:bg-green-700 flex items-center justify-center gap-3 shadow-md cursor-pointer">
+          Browse Products
+          <ng-icon name="heroArrowLongRight" />
+        </button>
       </div>
-    </div>
+    }
 
   </div>
 </section>

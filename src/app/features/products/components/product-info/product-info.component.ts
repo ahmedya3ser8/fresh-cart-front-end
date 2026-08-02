@@ -1,10 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 
 import { NgIconComponent, provideIcons } from "@ng-icons/core";
 import { heroArrowUturnLeft, heroHeart, heroMinus, heroPlus, heroShare, heroShieldCheck, heroStar, heroTruck } from '@ng-icons/heroicons/outline';
 import { heroBoltSolid, heroShoppingCartSolid, heroStarSolid } from '@ng-icons/heroicons/solid';
 
 import { Product } from '../../models';
+import { CartService } from '../../../cart';
+import { WishlistService } from '../../../wishlist';
 
 @Component({
   selector: 'app-product-info',
@@ -30,9 +32,20 @@ import { Product } from '../../models';
 export class ProductInfoComponent {
   @Input({ required: true }) product!: Product;
 
+  private readonly wishlistService = inject(WishlistService);
+  private readonly cartService = inject(CartService);
+
   features = [
     { id: 'a', icon: 'heroTruck', title: 'Free Delivery', description: 'Orders over $50' },
     { id: 'b', icon: 'heroArrowUturnLeft', title: '30 Days Return', description: 'Money back' },
     { id: 'c', icon: 'heroShieldCheck', title: 'Secure Payment', description: '100% Protected' },
   ];
+
+  addToCart(productId: string): void {
+    this.cartService.addProductToCart(productId);
+  }
+
+  addToWishlist(productId: string): void {
+    this.wishlistService.addProductToWishlist(productId);
+  }
 }

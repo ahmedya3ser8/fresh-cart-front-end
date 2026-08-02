@@ -17,7 +17,7 @@ export class WishlistService extends BaseHttpService<Wishlist, CreateWishlistDto
   wishlist = new BehaviorSubject<Wishlist | null>(null);
 
   loadWishlist(): void {
-    this.get().subscribe({
+    this.get<Wishlist>().subscribe({
       next: (res) => {
         console.log(res);
         this.wishlist.next(res);

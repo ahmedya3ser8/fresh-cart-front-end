@@ -21,4 +21,10 @@ export const API_ENDPOINTS = {
   ORDER: {
     BASE: '/v1/orders'
   },
+  USER: {
+    BASE: '/v1/users'
+  },
+  ADDRESS: {
+    BASE: '/v1/addresses'
+  },
 } as const;

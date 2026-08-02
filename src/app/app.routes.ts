@@ -44,6 +44,14 @@ export const routes: Routes = [
         path: 'wishlist',
         loadChildren: () => import('./features/wishlist/wishlist.routes').then((r) => r.WISHLIST_ROUTES)
       },
+      {
+        path: 'profile',
+        loadChildren: () => import('./features/profile/profile.routes').then((r) => r.PROFILE_ROUTES)
+      },
+      {
+        path: 'allorders',
+        loadChildren: () => import('./features/orders/order.routes').then((r) => r.ORDER_ROUTES)
+      },
     ]
   },
 ];

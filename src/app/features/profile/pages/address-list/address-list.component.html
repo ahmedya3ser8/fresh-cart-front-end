@@ -1,0 +1,128 @@
+<app-page-header
+  [title]="'My Addresses'"
+  [description]="'Manage your addresses and account settings'"
+  [icon]="'heroMapPinSolid'"
+  [gradiant]="'bg-linear-to-br from-green-600 via-green-500 to-green-400'"
+>
+  <app-breadcrumb [breadcrumbs]="breadcrumbs" />
+</app-page-header>
+
+<section class="py-10">
+  <div class="container">
+
+    <div class="flex items-center justify-between mb-6">
+      <div class="space-y-1">
+        <h2 class="text-xl font-bold text-gray-900"> My Addresses </h2>
+        <p class="text-gray-500 text-sm"> Manage your saved delivery addresses </p>
+      </div>
+      <button (click)="isOpen = true" class="px-6 py-3 bg-green-600 text-white rounded-xl font-semibold cursor-pointer flex items-center gap-2 transition hover:bg-green-700">
+        <ng-icon name="heroPlus" />
+        Add Address
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      @for (address of addressess; track address._id) {
+        <div class="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm flex gap-4 transition hover:shadow-md hover:border-green-100 group">
+          <div class="size-11 rounded-xl bg-green-50 text-green-600 flex items-center justify-center transition group-hover:bg-green-100">
+            <ng-icon size="18" name="heroMapPinSolid" />
+          </div>
+          <div class="flex-1 flex justify-between">
+            <div class="space-y-2">
+              <h3 class="font-bold text-gray-900"> {{ address.name }} </h3>
+              <p class="text-sm text-gray-600 line-clamp-2"> {{ address.details }} </p>
+              <div class="flex items-center gap-4 flex-wrap">
+                <div class="flex items-center gap-1 text-sm text-gray-500">
+                  <ng-icon size="12" name="heroPhoneSolid" />
+                  <span> {{ address.phone }} </span>
+                </div>
+                <div class="flex items-center gap-1 text-sm text-gray-500">
+                  <ng-icon size="12" name="heroBuildingLibrary" />
+                  <span> {{ address.city }} </span>
+                </div>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button (click)="onEdit(address)" class="size-9 rounded-lg bg-gray-100 cursor-pointer transition hover:bg-green-100 hover:text-green-600 flex items-center justify-center">
+                <ng-icon size="14" name="heroPencilSolid" />
+              </button>
+              <button (click)="deleteAddress(address._id)" class="size-9 rounded-lg bg-gray-100 cursor-pointer transition hover:bg-red-100 hover:text-red-600 flex items-center justify-center">
+                <ng-icon size="14" name="heroTrashSolid" />
+              </button>
+            </div>
+          </div>
+        </div>
+      } @empty {
+        <div class="space-y-5 flex justify-center items-center flex-col col-span-full py-5">
+          <div class="size-20 rounded-full bg-gray-100 flex items-center justify-center">
+            <ng-icon size="30" name="heroMapPinSolid" />
+          </div>
+          <h2 class="text-lg font-bold text-gray-900"> No Addresses Yet </h2>
+          <p class="text-gray-500 text-sm font-medium leading-relaxed text-center">
+            Add your first delivery address to make checkout <br /> faster and easier.
+          </p>
+          <button (click)="isOpen = true" class="w-fit px-6 py-3 bg-green-600 text-white rounded-xl font-semibold cursor-pointer flex items-center gap-2 transition hover:bg-green-700">
+            <ng-icon name="heroPlus" />
+            Add Address
+          </button>
+        </div>
+      }
+    </div>
+
+  </div>
+</section>
+
+@if (isOpen) {
+  <div class="fixed inset-0 z-100 bg-black/20 flex items-center justify-center">
+    <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-lg">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-bold text-gray-900"> Add New Address </h2>
+        <button (click)="isOpen = false" class="size-9 rounded-lg bg-gray-100 text-gray-600 cursor-pointer transition hover:bg-gray-200 hover:text-gray-900 flex items-center justify-center">
+          <ng-icon size="16" name="heroXMark" />
+        </button>
+      </div>
+      <form [formGroup]="form" (ngSubmit)="submitForm()" class="mt-4 space-y-4">
+        <div class="space-y-2">
+          <label for="name" class="block font-medium"> Address Name </label>
+          <input type="text" id="name" formControlName="name" class="form-control" placeholder="e.g. Home, Office" />
+          @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
+            <p class="text-sm text-red-500"> Address name is required </p>
+          }
+        </div>
+        <div class="space-y-2">
+          <label for="details" class="block font-medium"> Full Address </label>
+          <textarea class="form-control h-20" formControlName="details" id="details" placeholder="Street, building, apartment..."></textarea>
+          @if (form.get('details')?.hasError('required') && form.get('details')?.touched) {
+            <p class="text-sm text-red-500"> Full Address is required </p>
+          }
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="space-y-2">
+            <label for="phone" class="block font-medium"> Phone Number </label>
+            <input type="tel" id="phone" formControlName="phone" class="form-control" placeholder="Enter your phone" />
+            @if (form.get('phone')?.hasError('required') && form.get('phone')?.touched) {
+              <p class="text-sm text-red-500"> Phone is required </p>
+            }
+          </div>
+          <div class="space-y-2">
+            <label for="city" class="block font-medium"> City </label>
+            <input type="text" id="city" formControlName="city" class="form-control" placeholder="Enter your city" />
+            @if (form.get('city')?.hasError('required') && form.get('city')?.touched) {
+              <p class="text-sm text-red-500"> City is required </p>
+            }
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <button type="button" (click)="isOpen = false" class="w-full px-6 py-3 rounded-xl border border-gray-200 text-gray-600 transition hover:bg-gray-50 cursor-pointer">
+            Cancel
+          </button>
+          <button type="submit" class="w-full px-6 py-3 rounded-xl font-medium text-white bg-emerald-600 transition hover:bg-emerald-700 cursor-pointer">
+            Add Address
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
+
+
