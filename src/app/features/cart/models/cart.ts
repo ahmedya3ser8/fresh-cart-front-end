@@ -21,11 +21,3 @@ export interface CartProduct {
   count: number;
   product: Product;
 }
-
-export interface CreateCartDto {
-  productId: string;
-}
-
-export interface UpdateCartDto {
-  count: number;
-}

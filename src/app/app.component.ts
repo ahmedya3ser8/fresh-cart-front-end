@@ -20,8 +20,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
-      this.wishlistService.loadWishlist();
-      this.cartService.loadCart();
+      this.wishlistService.getUserWishlist().subscribe();
+      this.cartService.getUserCart().subscribe();
     }
   }
 }

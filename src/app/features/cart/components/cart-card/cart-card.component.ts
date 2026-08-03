@@ -27,10 +27,10 @@ export class CartCardComponent {
   @Input({ required: true }) product!: CartProduct;
 
   deleteProduct(productId: string): void {
-    this.cartService.deleteProduct(productId);
+    this.cartService.deleteProduct(productId).subscribe();
   }
 
   updateQuantity(productId: string, count: number): void {
-    this.cartService.updateQuantity(productId, count);
+    this.cartService.updateQuantity(productId, count).subscribe();
   }
 }

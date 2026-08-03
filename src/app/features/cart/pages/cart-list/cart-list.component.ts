@@ -42,11 +42,11 @@ export class CartListComponent {
   }
 
   ngOnInit(): void {
-    this.cartService.loadCart();
+    this.cartService.getUserCart().subscribe();
   }
 
-  deleteCart(): void {
-    this.cartService.deleteCart();
+  clearCart(): void {
+    this.cartService.clearCart().subscribe();
     this.isOpen = false;
   }
 }

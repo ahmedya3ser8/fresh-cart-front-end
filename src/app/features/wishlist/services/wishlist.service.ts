@@ -1,57 +1,41 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 import { BaseHttpService } from '../../../core';
 import { API_ENDPOINTS } from '../../../constants';
-import { CreateWishlistDto, Wishlist, WishlistDto } from '../models';
+import { Wishlist, WishlistDto } from '../models';
 
 @Injectable({
   providedIn: 'root'
 })
-export class WishlistService extends BaseHttpService<Wishlist, CreateWishlistDto> {
-  override getResourceUrl(): string {
-    return API_ENDPOINTS.WISHLIST.BASE;
-  }
-
+export class WishlistService extends BaseHttpService {
   wishlistIds = new BehaviorSubject<string[]>([]);
   wishlist = new BehaviorSubject<Wishlist | null>(null);
 
-  loadWishlist(): void {
-    this.get<Wishlist>().subscribe({
-      next: (res) => {
-        console.log(res);
+  getUserWishlist(): Observable<Wishlist> {
+    return this.get<Wishlist>(API_ENDPOINTS.WISHLIST.GET_USER_WISHLIST).pipe(
+      tap(res => {
         this.wishlist.next(res);
         const ids = res.data.map(product => product._id);
         this.wishlistIds.next(ids);
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+      })
+    )
   }
 
-  addProductToWishlist(productId: string): void {
-    this.post<WishlistDto>('', { productId }).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.loadWishlist();
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+  addProductToWishlist(productId: string): Observable<WishlistDto> {
+    return this.post<WishlistDto>(API_ENDPOINTS.WISHLIST.ADD_PRODUCT_TO_WISHLIST, { productId }).pipe(
+      tap(res => {
+        this.getUserWishlist().subscribe();
+      })
+    )
   }
 
-  removeProductFromWishlist(productId: string): void {
-    this.delete<WishlistDto>(productId).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.loadWishlist();
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+  removeProductFromWishlist(productId: string): Observable<WishlistDto> {
+    return this.delete<WishlistDto>(API_ENDPOINTS.WISHLIST.DELETE_PRODUCT_FROM_WISHLIST(productId)).pipe(
+      tap(res => {
+        this.getUserWishlist().subscribe();
+      })
+    )
   }
 
   isInWishlist(productId: string): boolean {

@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { NgIconComponent, provideIcons } from "@ng-icons/core";
 import { heroClipboardDocumentListSolid, heroCreditCardSolid, heroExclamationCircleSolid, heroHomeSolid, heroShoppingBagSolid } from '@ng-icons/heroicons/solid';
@@ -8,7 +9,6 @@ import { BreadcrumbComponent } from "../../../../shared";
 import { CartService } from '../../services';
 import { Cart } from '../../models/cart';
 import { OrderService } from '../../../orders';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkout',
@@ -45,7 +45,7 @@ export class CheckoutComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.getCartId();
-    this.cartService.loadCart();
+    this.cartService.getUserCart().subscribe();
   }
 
   get cart(): Cart | null {
@@ -91,7 +91,7 @@ export class CheckoutComponent implements OnInit {
     this.orderService.createCashOrder(this.cartId, this.form.value).subscribe({
       next: (res) => {
         console.log(res);
-        this.cartService.loadCart();
+        this.cartService.getUserCart();
         this.router.navigateByUrl('/home');
       },
       error: (err) => {
@@ -104,7 +104,7 @@ export class CheckoutComponent implements OnInit {
     this.orderService.createOnlineOrder(this.cartId, this.form.value).subscribe({
       next: (res) => {
         console.log(res);
-        this.cartService.loadCart();
+        this.cartService.getUserCart();
         location.assign(res.session.url);
       },
       error: (err) => {

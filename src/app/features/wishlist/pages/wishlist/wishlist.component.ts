@@ -39,14 +39,14 @@ export class WishlistComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.wishlistService.loadWishlist();
+    this.wishlistService.getUserWishlist().subscribe();
   }
 
   removeProductFromWishlist(productId: string): void {
-    this.wishlistService.removeProductFromWishlist(productId);
+    this.wishlistService.removeProductFromWishlist(productId).subscribe();
   }
 
   addToCart(productId: string): void {
-    this.cartService.addProductToCart(productId);
+    this.cartService.addProductToCart(productId).subscribe();
   }
 }

@@ -36,14 +36,14 @@ export class ProductCardComponent {
   }
 
   addProductToCart(productId: string): void {
-    this.cartService.addProductToCart(productId);
+    this.cartService.addProductToCart(productId).subscribe();
   }
 
   toggleWishlist(productId: string): void {
     if (this.isInWishlist(productId)) {
-      this.wishlistService.removeProductFromWishlist(productId);
+      this.wishlistService.removeProductFromWishlist(productId).subscribe();
     } else {
-      this.wishlistService.addProductToWishlist(productId);
+      this.wishlistService.addProductToWishlist(productId).subscribe();
     }
   }
 

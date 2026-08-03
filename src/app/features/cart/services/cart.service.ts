@@ -1,81 +1,47 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 import { API_ENDPOINTS } from '../../../constants';
 import { BaseHttpService } from '../../../core';
-import { Cart, CreateCartDto, UpdateCartDto } from '../models/cart';
+import { Cart } from '../models/cart';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CartService extends BaseHttpService<Cart, CreateCartDto, UpdateCartDto> {
-  override getResourceUrl(): string {
-    return API_ENDPOINTS.CART.BASE;
-  }
-
+export class CartService extends BaseHttpService {
   cart = new BehaviorSubject<Cart | null>(null);
   isLoading = new BehaviorSubject<boolean>(false);
 
-  loadCart(): void {
-    this.isLoading.next(true);
-    this.get<Cart>().subscribe({
-      next: (res) => {
-        console.log(res);
+  getUserCart(): Observable<Cart> {
+    return this.get<Cart>(API_ENDPOINTS.CART.GET_USER_CART).pipe(
+      tap(res => {
         this.cart.next(res);
         this.isLoading.next(false);
-      },
-      error: (err) => {
-        console.log(err);
-        this.isLoading.next(false);
-      }
-    })
+      })
+    );
   }
 
-  deleteCart(): void {
-    this.delete<Cart>().subscribe({
-      next: (res) => {
-        console.log(res);
-        this.cart.next(res);
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+  clearCart(): Observable<Cart> {
+    return this.delete<Cart>(API_ENDPOINTS.CART.CLEAR_CART()).pipe(
+      tap(res => this.cart.next(res))
+    )
   }
 
-  addProductToCart(productId: string): void {
-    this.post<Cart>('', { productId }).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.cart.next(res);
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+  addProductToCart(productId: string): Observable<Cart> {
+    return this.post<Cart>(API_ENDPOINTS.CART.ADD_PRODUCT_TO_CART, { productId }).pipe(
+      tap(res => this.cart.next(res))
+    )
   }
 
-  updateQuantity(productId: string, count: number): void {
-    this.put<Cart>(productId, { count }).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.cart.next(res);
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+  updateQuantity(productId: string, count: number): Observable<Cart> {
+    return this.put<Cart>(API_ENDPOINTS.CART.UPDATE_CART_PRODUCT_QUANTITY(productId), { count }).pipe(
+      tap(res => this.cart.next(res))
+    )
   }
 
-  deleteProduct(productId: string): void {
-    this.delete<Cart>(productId).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.cart.next(res);
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+  deleteProduct(productId: string): Observable<Cart> {
+    return this.delete<Cart>(API_ENDPOINTS.CART.DELETE_PRODUCT_FROM_CART(productId)).pipe(
+      tap(res => this.cart.next(res))
+    )
   }
 }

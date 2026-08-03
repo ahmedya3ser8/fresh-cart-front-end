@@ -73,12 +73,7 @@ export class SignupComponent implements OnInit {
         next: (res) => {
           console.log(res);
           if (res.message === 'success') {
-            // this.router.navigate(['/auth/signin']);
-            this.router.navigateByUrl('/auth/signin').then(success => {
-              console.log('Navigation success:', success);
-            }).catch(err => {
-              console.error('Navigation error:', err);
-            });
+            this.router.navigateByUrl('/auth/signin');
             this.isLoading = false;
           }
         },

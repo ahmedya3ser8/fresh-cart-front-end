@@ -6,7 +6,7 @@ import { heroBuildingLibrary, heroPlus, heroXMark } from '@ng-icons/heroicons/ou
 import { heroMapPinSolid, heroPencilSolid, heroPhoneSolid, heroTrashSolid } from '@ng-icons/heroicons/solid';
 
 import { BreadcrumbComponent, PageHeaderComponent } from "../../../../shared";
-import { Address, AddressResponse } from '../../models/address';
+import { Address } from '../../models/address';
 import { AddressService } from '../../services';
 
 @Component({
@@ -45,7 +45,7 @@ export class AddressListComponent implements OnInit {
   }
 
   loadAddressess(): void {
-    this.addressService.get<AddressResponse>().subscribe({
+    this.addressService.getUserAddresses().subscribe({
       next: (res) => {
         console.log(res);
         this.addressess = res.data;
@@ -68,7 +68,7 @@ export class AddressListComponent implements OnInit {
   submitForm(): void {
     if (this.form.valid) {
       console.log(this.form.value);
-      this.addressService.post<AddressResponse>('', this.form.value).subscribe({
+      this.addressService.addAddress(this.form.value).subscribe({
         next: (res) => {
           console.log(res);
           this.addressess = res.data;
@@ -84,7 +84,7 @@ export class AddressListComponent implements OnInit {
   }
 
   deleteAddress(addressId: string): void {
-    this.addressService.delete<AddressResponse>(addressId).subscribe({
+    this.addressService.removeAddress(addressId).subscribe({
       next: (res) => {
         console.log(res);
         this.addressess = res.data;

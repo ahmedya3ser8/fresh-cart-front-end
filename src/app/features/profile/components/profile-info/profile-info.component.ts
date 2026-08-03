@@ -41,7 +41,7 @@ export class ProfileInfoComponent implements OnInit {
   submitForm(): void {
     if (this.form.valid) {
       console.log(this.form.value);
-      this.authService.updateLoggedUserData(API_ENDPOINTS.USER.BASE + '/updateMe/', this.form.value).subscribe({
+      this.authService.updateLoggedUserData(this.form.value).subscribe({
         next: (res) => {
           console.log(res);
         },

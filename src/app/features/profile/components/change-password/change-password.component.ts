@@ -40,7 +40,7 @@ export class ChangePasswordComponent implements OnInit {
   submitForm(): void {
     if (this.form.valid) {
       console.log(this.form.value);
-      this.authService.updateLoggedUserPassword(API_ENDPOINTS.USER.BASE + '/changeMyPassword', this.form.value).subscribe({
+      this.authService.updateLoggedUserPassword(this.form.value).subscribe({
         next: (res) => {
           console.log(res);
         },

@@ -1,11 +1,11 @@
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
 
-import { ProductService } from '../services';
-import { ApiResponse } from '../../../core';
+import { ApiDataResponse } from '../../../core';
 import { Product } from '../models';
+import { ProductService } from '../services';
 
-export const productResolver: ResolveFn<ApiResponse<Product>> = (route, state) => {
+export const productResolver: ResolveFn<ApiDataResponse<Product>> = (route, state) => {
   const productService = inject(ProductService);
   const productId = route.paramMap.get('id')!;
   return productService.getById(productId);

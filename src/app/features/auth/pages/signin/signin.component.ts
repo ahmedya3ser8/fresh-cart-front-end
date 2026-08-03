@@ -46,11 +46,7 @@ export class SigninComponent implements OnInit {
         next: (res) => {
           console.log(res);
           if (res.message === 'success') {
-            this.router.navigateByUrl('/home').then(success => {
-              console.log('Navigation success:', success);
-            }).catch(err => {
-              console.error('Navigation error:', err);
-            });
+            this.router.navigateByUrl('/home');
             this.isLoading = false;
           }
         },

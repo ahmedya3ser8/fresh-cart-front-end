@@ -10,15 +10,11 @@ import { AuthResponse, ChangePassForm, DecodedToken, ForgotPasswordResponse, Res
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService extends BaseHttpService<AuthResponse> {
+export class AuthService extends BaseHttpService {
   private readonly platformId = inject(PLATFORM_ID);
 
   private currentUserSubject = new BehaviorSubject<User | null>(this.loadStoredUser());
   public currentUser$ = this.currentUserSubject.asObservable();
-
-  override getResourceUrl(): string {
-    return '';
-  }
 
   private loadStoredUser(): User | null {
     if (isPlatformBrowser(this.platformId)) {
@@ -56,8 +52,8 @@ export class AuthService extends BaseHttpService<AuthResponse> {
     this.currentUserSubject.next(null);
   }
 
-  updateLoggedUserData(endpoint: string, form: UpdateUserForm): Observable<UserDataResponse> {
-    return this.put<UserDataResponse>(endpoint, form).pipe(
+  updateLoggedUserData(form: UpdateUserForm): Observable<UserDataResponse> {
+    return this.put<UserDataResponse>(API_ENDPOINTS.AUTH.UPDATE_LOGGED_USER, form).pipe(
       tap(res => {
         console.log('updateLoggedUserData', res);
         localStorage.setItem(APP_CONSTANTS.USER_KEY, JSON.stringify(res.user));
@@ -66,8 +62,8 @@ export class AuthService extends BaseHttpService<AuthResponse> {
     );
   }
 
-  updateLoggedUserPassword(endpoint: string, form: ChangePassForm): Observable<AuthResponse> {
-    return this.put<AuthResponse>(endpoint, form).pipe(
+  updateLoggedUserPassword(form: ChangePassForm): Observable<AuthResponse> {
+    return this.put<AuthResponse>(API_ENDPOINTS.AUTH.UPDATE_LOGGED_PASSWORD, form).pipe(
       tap(res => {
         console.log('updateLoggedUserPassword', res);
         if (res.token) {
@@ -78,15 +74,15 @@ export class AuthService extends BaseHttpService<AuthResponse> {
   }
 
   forgotPassword(form: { email: string }): Observable<ForgotPasswordResponse> {
-    return this.post<ForgotPasswordResponse>('/v1/auth/forgotPasswords', form);
+    return this.post<ForgotPasswordResponse>(API_ENDPOINTS.AUTH.FORGOT_PASSWORD, form);
   }
 
   verifyResetCode(form: { resetCode: string }): Observable<VerifyCodeResponse> {
-    return this.post<VerifyCodeResponse>('/v1/auth/verifyResetCode', form);
+    return this.post<VerifyCodeResponse>(API_ENDPOINTS.AUTH.VERIFY_RESET_CODE, form);
   }
 
   resetPassword(form: { email: string, newPassword: string }): Observable<ResetPasswordResponse> {
-    return this.put<ResetPasswordResponse>('/v1/auth/resetPassword', form).pipe(
+    return this.put<ResetPasswordResponse>(API_ENDPOINTS.AUTH.RESET_PASSWORD, form).pipe(
       tap(res => localStorage.setItem(APP_CONSTANTS.TOKEN_KEY, res.token))
     );
   }

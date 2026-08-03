@@ -6,10 +6,6 @@ export interface Wishlist {
   data: Product[];
 }
 
-export interface CreateWishlistDto {
-  productId: string;
-}
-
 export interface WishlistDto {
   status: string;
   message: string;

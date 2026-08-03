@@ -1,30 +1,27 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { APP_CONSTANTS } from '../../../constants';
-import { ApiResponse } from '../../../core';
+import { API_ENDPOINTS } from '../../../constants';
+import { ApiDataResponse, ApiResponse, BaseHttpService } from '../../../core';
 import { Review } from '../models';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ReviewService {
-  private readonly http = inject(HttpClient);
-
+export class ReviewService extends BaseHttpService {
   getAll(): Observable<ApiResponse<Review[]>> {
-    return this.http.get<ApiResponse<Review[]>>(`${APP_CONSTANTS.API_BASE_URL}/v1/reviews`);
+    return this.http.get<ApiResponse<Review[]>>(API_ENDPOINTS.REVIEWS.GET_ALL);
+  }
+
+  getById(id: string): Observable<ApiDataResponse<Review>> {
+    return this.http.get<ApiDataResponse<Review>>(API_ENDPOINTS.REVIEWS.GET_BY_ID(id));
   }
 
   getAllForProduct(productId: string): Observable<ApiResponse<Review[]>> {
-    return this.http.get<ApiResponse<Review[]>>(`${APP_CONSTANTS.API_BASE_URL}/v1/products/${productId}/reviews`);
+    return this.http.get<ApiResponse<Review[]>>(API_ENDPOINTS.REVIEWS.GET_ALL_FOR_PRODUCTS(productId));
   }
 
-  getById(reviewId: string): Observable<ApiResponse<Review>> {
-    return this.http.get<ApiResponse<Review>>(`${APP_CONSTANTS.API_BASE_URL}/api/v1/reviews/${reviewId}`);
-  }
-
-  createReviewForProduct(productId: string, body: { review: string; rating: number }): Observable<ApiResponse<Review>> {
-    return this.http.post<ApiResponse<Review>>(`${APP_CONSTANTS.API_BASE_URL}/v1/products/${productId}/reviews`, body);
+  createReviewForProduct(productId: string, body: { review: string; rating: number }): Observable<ApiDataResponse<Review>> {
+    return this.http.post<ApiDataResponse<Review>>(API_ENDPOINTS.REVIEWS.CREATE(productId), body);
   }
 }
